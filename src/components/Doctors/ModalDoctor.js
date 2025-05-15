@@ -7,10 +7,12 @@ const ModalDoctor = (props) => {
     const { dataDoctor } = props;
     console.log("check data doctor: ", dataDoctor)
 
+    //-----------------------------------------------------------
     useEffect(() => {
 
     }, [dataDoctor])
 
+    //-----------------------------------------------------------
     return (
         <>
             <Modal size="lg" show={props.show} onHide={props.handleCloseModal}>

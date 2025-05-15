@@ -1,11 +1,354 @@
-.App {
-    .loading-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins.scss";
 
-        .loading-content {}
+// ======================================== BIẾN MÀU ======================================================
+$colors: (
+    "blue-100":       $blue-100,
+    "blue-200":       $blue-200,
+    "blue-300":       $blue-300,
+    "blue-400":       $blue-400,
+    "blue-500":       $blue-500,
+    "blue-600":       $blue-600,
+    "blue-700":       $blue-700,
+    "blue-800":       $blue-800,
+    "blue-900":       $blue-900,
+    "indigo-100": $indigo-100,
+        "indigo-200": $indigo-200,
+        "indigo-300": $indigo-300,
+        "indigo-400": $indigo-400,
+        "indigo-500": $indigo-500,
+        "indigo-600": $indigo-600,
+        "indigo-700": $indigo-700,
+        "indigo-800": $indigo-800,
+        "indigo-900": $indigo-900,
+    "purple-100": $purple-100,
+    "purple-200": $purple-200,
+    "purple-300": $purple-300,
+    "purple-400": $purple-400,
+    "purple-500": $purple-500,
+    "purple-600": $purple-600,
+    "purple-700": $purple-700,
+    "purple-800": $purple-800,
+    "purple-900": $purple-900,
+        "pink-100": $pink-100,
+        "pink-200": $pink-200,
+        "pink-300": $pink-300,
+        "pink-400": $pink-400,
+        "pink-500": $pink-500,
+        "pink-600": $pink-600,
+        "pink-700": $pink-700,
+        "pink-800": $pink-800,
+        "pink-900": $pink-900,
+    "red-100": $red-100,
+    "red-200": $red-200,
+    "red-300": $red-300,
+    "red-400": $red-400,
+    "red-500": $red-500,
+    "red-600": $red-600,
+    "red-700": $red-700,
+    "red-800": $red-800,
+    "red-900": $red-900,
+        "orange-100": $orange-100,
+        "orange-200": $orange-200,
+        "orange-300": $orange-300,
+        "orange-400": $orange-400,
+        "orange-500": $orange-500,
+        "orange-600": $orange-600,
+        "orange-700": $orange-700,
+        "orange-800": $orange-800,
+        "orange-900": $orange-900,
+    "yellow-100": $yellow-100,
+    "yellow-200": $yellow-200,
+    "yellow-300": $yellow-300,
+    "yellow-400": $yellow-400,
+    "yellow-500": $yellow-500,
+    "yellow-600": $yellow-600,
+    "yellow-700": $yellow-700,
+    "yellow-800": $yellow-800,
+    "yellow-900": $yellow-900,
+        "green-100": $green-100,
+        "green-200": $green-200,
+        "green-300": $green-300,
+        "green-400": $green-400,
+        "green-500": $green-500,
+        "green-600": $green-600,
+        "green-700": $green-700,
+        "green-800": $green-800,
+        "green-900": $green-900,
+    "teal-100": $teal-100,
+    "teal-200": $teal-200,
+    "teal-300": $teal-300,
+    "teal-400": $teal-400,
+    "teal-500": $teal-500,
+    "teal-600": $teal-600,
+    "teal-700": $teal-700,
+    "teal-800": $teal-800,
+    "teal-900": $teal-900,
+        "cyan-100": $cyan-100,
+        "cyan-200": $cyan-200,
+        "cyan-300": $cyan-300,
+        "cyan-400": $cyan-400,
+        "cyan-500": $cyan-500,
+        "cyan-600": $cyan-600,
+        "cyan-700": $cyan-700,
+        "cyan-800": $cyan-800,
+        "cyan-900": $cyan-900,
+    "gray-100": $gray-100,
+    "gray-200": $gray-200,
+    "gray-300": $gray-300,
+    "gray-400": $gray-400,
+    "gray-500": $gray-500,
+    "gray-600": $gray-600,
+    "gray-700": $gray-700,
+    "gray-800": $gray-800,
+    "gray-900": $gray-900,
+);
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+
+// // ==================================== MÀU NỀN =======================================================
+    @each $color-name, $color-value in $colors {
+        .bg-#{$color-name} {
+            background-color: $color-value;
+        }
     }
+
+// // ==================================== MÀU CHỮ =======================================================
+    @each $color-name, $color-value in $colors {
+        .text-#{$color-name} {
+            color: $color-value;
+        }
+    }
+
+    body {
+        font-family:'Nunito', sans-serif;
+    }
+
+
+
+
+.App {
+    font-family:'Nunito', sans-serif;
+}
+
+.App .loading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.loading-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.fs-7 {
+    font-size: 12px;
+}
+
+.fs-8 {
+    font-size: 10px;
+}
+
+.footer a {
+    transition: color 0.3s ease-in-out;
+}
+
+.footer a:hover {
+    color: #3b89ff;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.transition-transform {
+    transition: transform 0.3s ease;
+}
+
+.hover\:scale-110{
+    &:hover {
+        transform: scale(1.02);
+        transition: all 0.3s ease;
+    }
+
+    &:not(:hover) {
+        transition: all 0.3s ease;
+    }
+}
+// ==========================================================================================================
+// ==========================================================================================================
+.btn-white {
+    background: #ffffff;
+    color: rgb(46, 46, 46);
+    transition: all 0.3s ease;
+    border: 1px solid rgb(46, 46, 46);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+.btn-white::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: #b1b1b1;
+    transition: all 0.3s ease;
+    z-index: -1;
+}
+.btn-white:hover::before {
+    left: 0;
+}
+.btn-white:hover {
+    color: rgb(46, 46, 46); /* Giữ màu chữ không đổi */
+    border-color: #b1b1b1;
+}
+// ==========================================================================================================
+// ==========================================================================================================
+.nav-hover{
+    &:hover {
+        z-index: 10;
+        transition: all 0.5s ease;
+        border-top: 0.1em solid rgb(255, 255, 255);
+        background-color: rgb(0, 135, 165);
+    }
+
+    &:not(:hover) {
+        transition: all 0.5s ease;
+        border-top: 0.1em solid rgba(255, 255, 255, 0);
+        position: relative;
+        display: inline-block;
+    }
+}
+.nav-hover .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    background-color: white;
+    min-width: 100%;
+    padding: 8px 0;
+}
+
+/* Khi hover vào mục chính, dropdown sẽ hiện */
+.nav-hover:hover .dropdown-menu {
+    display: block;
+}
+
+/* Tạo hiệu ứng hover mượt mà */
+.dropdown-menu li a {
+    display: block;
+    color: black;
+    transition: all 0.3s ease-in-out;
+}
+
+.dropdown-menu li a:hover {
+    display: block;
+}
+
+.hover {
+    &:hover {
+        transform:translateY(-5px) scale(1.1);
+        transition: all 0.3s ease;
+    }
+
+    &:not(:hover) {
+        transition: all 0.3s ease;
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+li {
+    transition: background-color 0.3s ease-in-out; /* Làm mượt màu nền */
+}
+
+li:has(.schedule-btn:hover) {
+    background-color: rgb(222, 250, 255);
+}
+
+.card-booking-today {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.card-booking-today:hover {
+    background-color: #bbffca;
+    transform: scale(1.05);
+    z-index: 10;
+    animation: bounce 0.3s ease;
+}
+
+@keyframes bounce {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.07);
+    }
+    100% {
+        transform: scale(1.05);
+    }
+}
+
+.confirmvisitcompletionform {
+    z-index: 1000; 
+    transition: all 0.3s ease; 
+    transform: translateY(-100%);
+    animation: slideIn 0.3s ease forwards;
+    
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+// CSS Cho thanh tìm kiếm  ======================================================================================
+// CSS Cho thanh tìm kiếm  ======================================================================================
+// CSS Cho thanh tìm kiếm  ======================================================================================
+.suggestions-list {
+    position: absolute;
+    top: 100%; /* Hiển thị ngay dưới ô nhập */
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    max-height: 250px; /* Giới hạn chiều cao */
+    overflow-y: auto; /* Cuộn nếu danh sách quá dài */
+    z-index: 1000; /* Đảm bảo hiển thị trên các phần khác */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    color: rgb(94, 94, 94)
+}
+
+.suggestions-list li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+.suggestions-list li:hover {
+    background: #f0f0f0;
 }

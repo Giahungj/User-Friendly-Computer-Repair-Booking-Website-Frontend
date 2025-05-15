@@ -1,84 +1,54 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchAllDoctor } from "../../services/userService";
-import ModalDoctor from "./ModalDoctor";
+import { fetchAllDoctors } from "../../services/doctorService";
+import Avatar from '@mui/material/Avatar';
 
-const Doctors = (props) => {
-    const [listDoctors, setListDoctors] = useState([]);
-    const [isShowModalBooking, setIsShowModalBooking] = useState(false);
-
-
-    const [dataDoctor, setDataDoctor] = useState({})
-
-    const navigate = useNavigate(); // Khai báo hook điều hướng
-
-    const fetchDoctor = async () => {
-        let respone = await fetchAllDoctor();
-        console.log("check respone:", respone);
-        if (respone && +respone.EC === 0) {
-            setListDoctors(respone.DT);
-        }
-    };
-
+const DoctorList = () => {
+    const [doctors, setDoctors] = useState([]);
+    const navigate = useNavigate();
     useEffect(() => {
-        fetchDoctor();
+        const getDoctors = async () => {
+            try {
+                const response = await fetchAllDoctors();
+                if (response.data && response.data.EC === 0) {
+                    setDoctors(response.data.DT);
+                } else {
+                    console.error("Error fetching doctors:", response.data.EM);
+                }
+            } catch (error) {
+                console.error("Error fetching doctors:", error);
+            }
+        };
+        getDoctors();
     }, []);
 
-    const handleViewDetailDoctor = (doctor) => {
-        navigate(`/doctors/${doctor.id}`)
-    }
+    const handleViewDetail = (id) => {
+        navigate(`/doctors/${id}`);
+    };
 
-    const handleBooking = (doctor) => {
-        setIsShowModalBooking(true);
-        setDataDoctor(doctor);
-
-    }
-    const handleCloseModalBooking = () => {
-        setIsShowModalBooking(false);
-    }
     return (
-        <>
-            <h3>Danh sách bác sĩ</h3>
-            <ul>
-                {listDoctors.map((doctor, index) => (
-                    <div className="card shadow-sm mb-4" key={index}>
-                        <div className="card-header bg-primary text-white">
-                            <h5 className="mb-0">Thông tin bác sĩ</h5>
+        <div className="container p-4">
+            <p>Danh sách bác sĩ</p>
+            <ul className="list-group gap-4">
+                {doctors.map((doctor) => (
+                    <li key={doctor.id} className="list-group-item list-group-item-action border rounded shadow-sm" onClick={() => handleViewDetail(doctor.id)} style={{ cursor: 'pointer'}}>
+                       <div className="d-flex gap-5 align-items-center">
+                            <Avatar
+                                alt={doctor.User.name}
+                                src={
+                                doctor.User.avatar
+                                ? `http://localhost:8080/images/uploads/${doctor.User.avatar}`
+                                : '/default-avatar.jpg'
+                            }
+                            sx={{ width: 150, height: 150 }}
+                            />
+                            BS {doctor.User.name} chuyên khoa {doctor.Specialty.name}
                         </div>
-                        <div className="card-body">
-                            <h6 className="card-title">
-                                <strong>Bác sĩ:</strong> {doctor.User.name}
-                            </h6>
-                            <h6 className="card-title">
-                                <strong>Chuyên khoa:</strong> {doctor.Specialty.name}
-                            </h6>
-                            <h6 className="card-title">
-                                <strong>Nơi công tác:</strong> {doctor.Facility.name}
-                            </h6>
-                            <button
-                                className="btn btn-secondary mt-3"
-                                onClick={() => handleViewDetailDoctor(doctor)} // Chuyển hướng
-                            >
-                                Xem chi tiết
-                            </button>
-                            <button
-                                className="ms-2 btn btn-primary mt-3"
-                                onClick={() => handleBooking(doctor)} // Chuyển hướng
-                            >
-                                Đặt lịch
-                            </button>
-                        </div>
-                    </div>
+                    </li>
                 ))}
             </ul>
-
-            <ModalDoctor
-                show={isShowModalBooking}
-                handleCloseModal={handleCloseModalBooking}
-                dataDoctor={dataDoctor}
-            />
-        </>
+        </div>
     );
 };
 
-export default Doctors;
+export default DoctorList;

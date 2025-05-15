@@ -1,54 +1,61 @@
 import { useEffect, useState, useContext } from 'react';
 import './Login.scss'
 //import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify'
-
-import { loginUser } from '../../services/userService';
-import { UserContext } from '../../context/UserContext';
+import { loginUser } from '../../services/AuthService';
+import { AuthContext } from '../../context/AuthContext';
 
 const Login = (props) => {
-    const { loginContext } = useContext(UserContext);
-
+    const { loginContext } = useContext(AuthContext);
+    const location = useLocation(); 
     let history = useNavigate();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const HandleCreateNewAccount = () => {
+    const HandleCreateNewPatientAccount = () => {
         history('/register')
+    }
+
+    const HandleCreateNewDoctorAccount = () => {
+        history('/register-doctor/step1')
     }
 
     const handleLogin = async () => {
         if (!email) {
-            toast.error("Please enter your email address!");
+            toast.error("Vui lòng nhập Email!");
             return;
         }
         if (!password) {
-            toast.error("Please enter your password!");
+            toast.error("Vui lòng nhập mật khẩu!");
             return;
         }
-
-        let respone = await loginUser(email, password);
-        if (+respone.EC === 0) {
-            let email = respone.DT.email;
-            let name = respone.DT.name;
-            let token = respone.DT.access_token;
-            let userType = respone.DT.userType;
-            let data = {
-                isAuthenticated: true,
-                token: token,
-                account: { email, name, userType }
+        try {
+            const response = await loginUser(email, password);
+            if (+response.EC === 0) {
+                const { email, name, access_token: token, userType, id, patientId, doctorId, avatar, serviceId } = response.DT;
+                const data = {
+                    isAuthenticated: true,
+                    token: token,
+                    account: { email, name, userType, id, avatar, serviceId }
+                };
+                // Kiểm tra nếu có doctorId thì thêm vào, nếu không thì thêm patientId
+                if (doctorId) {
+                    data.account.doctorId = doctorId;
+                } else if (patientId) {
+                    data.account.patientId = patientId;
+                }
+                loginContext(data);
+                const from = location.state?.from || '/';
+                history(from);
+            } else {
+                toast.error(response.EM);
             }
-            loginContext(data)
-            toast.success(respone.EM);
-            history("/users");
-            // window.location.reload();
-
-        } else {
-            toast.error(respone.EM)
+        } catch (error) {
+            toast.error("Có lỗi xảy ra, vui lòng thử lại!");
         }
-    }
+    };
 
     const handlePressEnter = (event) => {
         if (event.code === "Enter") {
@@ -85,13 +92,16 @@ const Login = (props) => {
                         <button onClick={() => { handleLogin() }} type='password' className='btn btn-primary'
 
                         >
-                            Login
+                            Đăng nhập
                         </button>
-                        <span className='text-center'><a href='#' className='forgot-password'>Forgot your password?</a></span>
+                        <span className='text-center'><a href='/forgot-password' className='forgot-password'>Quên mật khẩu</a></span>
                         <hr />
                         <div className='text-center'>
-                            <button onClick={() => HandleCreateNewAccount()} className='btn btn-success'>
-                                Create new account
+                            <button onClick={() => HandleCreateNewPatientAccount()} className='btn btn-success me-2'>
+                                Đăng ký bệnh nhân
+                            </button>
+                            <button onClick={() => HandleCreateNewDoctorAccount()} className='btn btn-primary'>
+                                Đăng ký bác sĩ
                             </button>
                         </div>
                     </div>
