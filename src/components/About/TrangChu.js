@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchFeaturedDoctors } from "../../services/doctorService";
-import { fetchSpecialties } from "../../services/specialtySevice";
+import { getSpecialties } from "../../services/specialtySevice";
 import { fetchFacilities } from "../../services/FacilityService";
 import Avatar from '@mui/material/Avatar';
 import BannerCarousel from "./BannerCarousel ";
@@ -23,7 +23,7 @@ const TrangChu = () => {
                     console.error("Error fetching featured doctors:", doctorsResponse ? doctorsResponse.EM : "Unknown error");
                 }
 
-                const specialtiesResponse = await fetchSpecialties();
+                const specialtiesResponse = await getSpecialties();
                 if (specialtiesResponse && specialtiesResponse.EC === 0) {
                     setSpecialties(specialtiesResponse.DT.specialties);
                 } else {

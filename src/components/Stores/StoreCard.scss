@@ -1,0 +1,18 @@
+.card-hover {
+	transition: box-shadow 0.3s ease, border-color 0.3s ease;
+	border: 1px solid transparent;
+}
+
+.card-hover:hover {
+	border-color: #bbdefb !important;
+	box-shadow: 0 0.25rem 0.75rem rgba(33, 150, 243, 0.2); /* màu #2196f3 bóng nhẹ */
+}
+
+.card-hover:hover .info-box {
+	background-color: #e3f2fd !important;
+	transition: background-color 0.3s ease;
+}
+
+.card, .info-box {
+    border-radius: 0.8rem;
+}

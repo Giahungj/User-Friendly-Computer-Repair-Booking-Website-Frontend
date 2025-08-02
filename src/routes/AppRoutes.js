@@ -2,168 +2,101 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route } from 'react-router-dom';
 
 // Trang test
-import TestComponent from "../components/TestComponent"
+import TestComponent from "../components/TestComponent";
+import TestHeaderConmponent from "../components/TestHeaderConmponent";
+import TestDeviceListComponent from "../components/TestDeviceListComponent";
+import TestBookingFormComponent from "../components/TestBookingFormComponent";
+
 // Trang chính
 import Home from '../components/Home/Home';
 import TrangChu from '../components/About/TrangChu';
-import DoctorHome from '../components/Home/DoctorHome';
 import About from '../components/About/About';
 import NotFound from '../components/NotFound/NotFound';
 import Search from '../components/Search/Search';
 
 // Quản lý người dùng
-import Login from '../components/Login/Login';
+// import Login from '../components/Login/Login';
 import ForgotPassword from '../components/ForgotPassword/ForgotPassword';
 import VerifyOTP from '../components/ForgotPassword/VerifyOTP';
 import ResetPassword from '../components/Profile/ResetPassword';
 import ChangePassword from '../components/Profile/ChangePassword';
-import RegisterPatient from '../components/Register/RegisterPatient';
-import RegisterDoctor from '../components/Register/RegisterDoctor';
-import RegisterDoctorStep1 from '../components/Register/RegisterDoctorStep1';
-import RegisterDoctorStep2 from '../components/Register/RegisterDoctorStep2';
-import RegisterDoctorStep3 from '../components/Register/RegisterDoctorStep3';
-import RegisterDoctorStep4 from '../components/Register/RegisterDoctorStep4';
-import RegisterDoctorStep5 from '../components/Register/RegisterDoctorStep5';
-import Users from '../components/Users/Users'; 
-import UserProfile from '../components/Profile/UserProfile'; 
-import UpdateProfile from '../components/Profile/UpdateProfile'; 
-// import UpdateEmail from '../components/Profile/UpdateEmail'; 
-// import UpdatePhone from '../components/Profile/UpdatePhone'; 
+import UserProfile from '../components/Profile/UserProfile';
+import UpdateProfile from '../components/Profile/UpdateProfile';
 
-// ===============================================================================================
-// ===============================================================================================
-// ===============================================================================================
-// Hệ thống bác sĩ
-import DoctorBookingsToday from "../components/Booking/DoctorBookingsToday"
-import DoctorPatientManager from "../components/Patients/DoctorManagerPatient"
-import DoctorScheduleForm from "../components/DoctorViews/Schedules/DoctorScheduleForm"
-import DoctorScheduleManager from "../components/DoctorViews/Schedules/DoctorManagerSchedule"
-import DoctorUpdateScheduleForm from "../components/DoctorViews/Schedules/DoctorUpdateScheduleForm"
-import DoctorPayments from "../components/DoctorViews/Payments/DoctorPayments"
-import DoctorDetailPayment from "../components/DoctorViews/Payments/DoctorDetailPayment"
-
-import DoctorServicePricing from "../components/DoctorViews/Payments/DoctorServicePricing"
-import DoctorServiceManagement from "../components/DoctorViews/Payments/DoctorServiceManagement"
-
-import DoctorBookingHistory from "../components/DoctorViews/Bookings/DoctorBookingHistory"
-import DoctorBookingHistoryDetail from "../components/DoctorViews/Bookings/DoctorBookingHistoryDetail"
-import StatiscalMain from "../components/DoctorViews/Statistical/StatiscalMain"
-
-import DoctorSpecialtyAndFacility from "../components/DoctorViews/DoctorSpecialtyAndFacility"
-// ===============================================================================================
-import NotAllow from "../components/NotFound/NotAlow"
-// ===============================================================================================
-// ===============================================================================================
-
-// Bác sĩ
-import DoctorList from '../components/Doctors/Doctors';
-import DoctorDetail from '../components/Doctors/DoctorDetail';
-import VisitedDoctors from '../components/Doctors/VisitedDoctors ';
-
-// Phòng khám
-import FacilityList from '../components/Facilities/FacilityList';
-import FacilityDetail from '../components/Facilities/FacilityDetail';
-
-// Chuyên khoa
-import SpecialtyList from '../components/Specialties/SpecialtyList';
-import SpecialtyDetail from '../components/Specialties/SpecialtyDetail';
-
-// Đặt lịch hẹn
+// Đặt lịch sửa chữa
 import ConfirmBooking from '../components/Booking/ConfirmBooking';
 import BookingDetail from '../components/Booking/BookingDetail';
 import BookingsHistory from '../components/Booking/BookingsHistory';
 import BookingHistoryDetail from '../components/Booking/BookingHistoryDetail';
-
 import UpcomingBookings from '../components/Booking/UpcomingBookings';
+
+// Quản lý lịch hẹn
+import BookingCreateStep1 from '../components/Booking/BookingCreates/BookingCreateStep1';
+import BookingCreateStep2 from '../components/Booking/BookingCreates/BookingCreateStep2';
+import BookingConfirm from '../components/Booking/BookingConfirm';
+import BookingStatus from '../components/Booking/BookingStatus';
+import BookingInfo from '../components/Booking/BookingInfo';
+import BookingCompleted from '../components/Booking/BookingCompleted';
+import TechnicianListPage from '../components/Technicians/TechnicianListPage';
+import TechnicianDetailPage from '../components/Technicians/TechnicianDetailPage';
+import StoreList from '../components/Stores/StoreList';
+import SpecialtyListPage from '../components/CustomerInterfaces/Specialties/SpecialtyListPage';
 
 // Bảo vệ đường dẫn
 import PrivateRoutes from './PrivateRoutes';
-import PrivateDoctorRoutes from './PrivateDoctorRoutes';
-// import ResetPassword from '../components/Profile/ResetPassword';
 
 const AppRoutes = () => {
-    return (
-        <Routes>
-            {/* Các route nằm trong layout Home bác sĩ */}
-            <Route path="/doctor" element={<DoctorHome />}>
-                {/* Routes bảo mật */}
-                <Route element={<PrivateDoctorRoutes />}>
-                    {/* Schedule-related routes */}
-                    <Route path="manager-schedule/:id" element={<DoctorScheduleManager />} />
-                    <Route path="register-schedule/:id" element={<DoctorScheduleForm />} />
-                    <Route path="update-schedule/:scheduleId/:userId/:date" element={<DoctorUpdateScheduleForm />} />
+	return (
+		<Routes>
+			{/* Các route nằm trong layout Home */}
+			<Route path="/" element={<Home />}>
+				<Route index element={<TrangChu />} />
+				<Route path="/search" element={<Search />} />
+				<Route path="/about" element={<About />} />
+				
+				<Route path="/ky-thuat-vien/tat-ca" element={<TechnicianListPage />} />
+				<Route path="/ky-thuat-vien/:id/chi-tiet" element={<TechnicianDetailPage />} />
 
-                    {/* Booking-related route */}
-                    <Route path="/doctor/manager-booking/bookings-today/:id" element={<DoctorBookingsToday />} />
-                    <Route path="/doctor/manager-booking/bookings-upcoming/:id" element={<DoctorBookingsToday />} />
+				<Route path="/cua-hang/tat-ca" element={<StoreList />} />
+				<Route path="/chuyen-muc/tat-ca" element={<SpecialtyListPage />} />
+				{/* <Route path="/chuyen-muc/:id/chi-tiet" element={<SpecialtyDetailPage />} /> */}
 
-                    <Route path="/doctor/manager-booking/booking-history" element={<DoctorBookingHistory />} />
-                    <Route path="/doctor/manager-booking/booking-history/detail/:bookingId" element={<DoctorBookingHistoryDetail />} />
+				{/* Routes bảo mật */}
+				<Route element={<PrivateRoutes />}>
+					{/* <Route path="/booking/confirm" element={<ConfirmBooking />} /> */}
+					<Route path="/booking/detail/:bookingId" element={<BookingDetail />} />
+					<Route path="/bookings/history" element={<BookingsHistory />} />
+					<Route path="/bookings/history/:bookingId" element={<BookingHistoryDetail />} />
+					<Route path="/bookings/upcoming" element={<UpcomingBookings />} />
 
-                    {/* Doctor management routes */}
-                    <Route path="/doctor/patient-manager/:doctorId" element={<DoctorPatientManager />} />
-                    <Route path="/doctor/payments" element={<DoctorPayments />} />
-                    <Route path="/doctor/payments/detail/:paymentId" element={<DoctorDetailPayment />} />
-                    <Route path="/doctor/statistical" element={<StatiscalMain />} />
-                    <Route path="/doctor/specialty-facility" element={<DoctorSpecialtyAndFacility />} />
+					<Route path="/dat-lich/:workScheduleId/tao-lich" element={<BookingCreateStep1 />} />
+					<Route path="/dat-lich/tao-buoc-2" element={<BookingCreateStep2 />} />
+					<Route path="/booking/confirm" element={<BookingConfirm />} />
+					<Route path="/booking/status" element={<BookingStatus />} />
+					<Route path="/booking/info/:id" element={<BookingInfo />} />
+					<Route path="/booking/completed" element={<BookingCompleted />} />
 
-                    {/* Doctor service route */}
-                    <Route path="/doctor/service-pricing" element={<DoctorServicePricing />} />
-                    <Route path="/doctor/service-management" element={<DoctorServiceManagement />} />
-                    {/* <Route path="confirm-and-update/:bookingId/:patientId/:date" element={<ConfirmVisitCompletionForm />} /> */}
-                </Route>
+					<Route path="/profile/:email" element={<UserProfile />} />
+					<Route path="/profile/update-profile" element={<UpdateProfile />} />
+					<Route path="/profile/change-password" element={<ChangePassword />} />
+				</Route>
 
-                <Route path="*" element={<NotFound />} />
-            </Route>
-            {/* Các route nằm trong layout Home */}
-            <Route path="/" element={<Home />}>
-                <Route index element={<TrangChu />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="/not-allow" element={<NotAllow />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/doctors" element={<DoctorList />} />
-                <Route path="/doctors/:id" element={<DoctorDetail />} />
-                <Route path="/facilities" element={<FacilityList />} />
-                <Route path="/facilities/:id" element={<FacilityDetail />} />
-                <Route path="/specialties" element={<SpecialtyList />} />
-                <Route path="/specialties/:id" element={<SpecialtyDetail />} />
-                {/* Routes bảo mật */}
-                <Route element={<PrivateRoutes />}>
-                    <Route path="/bookings/history" element={<BookingsHistory />} />
-                    <Route path="/bookings/history/:bookingId" element={<BookingHistoryDetail />} />
-                    <Route path="/bookings/upcoming" element={<UpcomingBookings />} />
-                    <Route path="/booking/:bookingId" element={<BookingDetail />} />
-                    <Route path="/doctors/visited" element={<VisitedDoctors />} />
-                    <Route path="/confirm-booking" element={<ConfirmBooking />} />
-                    <Route path="/users" element={<Users />} />
-                    <Route path="/profile/:email" element={<UserProfile />} />
-                    <Route path="/profile/update-profile" element={<UpdateProfile />} />
-                    {/* <Route path="/profile/update-email" element={<UpdateEmail />} /> */}
-                    {/* <Route path="/profile/update-phone" element={<UpdatePhone />} /> */}
-                    <Route path="/profile/change-password" element={<ChangePassword />} />
-                </Route>
+				<Route path="*" element={<NotFound />} />
+			</Route>
 
-                <Route path="*" element={<NotFound />} />
-            </Route>
-            {/* Các route không nằm trong layout Home */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/verify-otp" element={<VerifyOTP />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            
-            <Route path="/register" element={<RegisterPatient />} />
-            <Route path="/register-doctor" element={<RegisterDoctor />}>
-                <Route index element={<RegisterDoctorStep1 />} />
-                <Route path="step1" element={<RegisterDoctorStep1 />} />
-                <Route path="step2" element={<RegisterDoctorStep2 />} />
-                <Route path="step3" element={<RegisterDoctorStep3 />} />
-                <Route path="step4" element={<RegisterDoctorStep4 />} />
-                <Route path="step5" element={<RegisterDoctorStep5 />} />
-            </Route>
-            {/* Các route dùng để Test giao diện */}
-            <Route path="/test" element={<TestComponent />} />
-        </Routes>
-    );
+			{/* Các route không cần layout Home */}
+			{/* <Route path="/login" element={<Login />} /> */}
+			<Route path="/forgot-password" element={<ForgotPassword />} />
+			<Route path="/verify-otp" element={<VerifyOTP />} />
+			<Route path="/reset-password" element={<ResetPassword />} />
+
+			{/* Các route test giao diện */}
+			<Route path="/test" element={<TestComponent />} />
+			<Route path="/test-header" element={<TestHeaderConmponent />} />
+			<Route path="/test-card-service" element={<TestDeviceListComponent />} />
+			<Route path="/test-booking-form" element={<TestBookingFormComponent />} />
+		</Routes>
+	);
 };
 
 export default AppRoutes;

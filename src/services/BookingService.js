@@ -12,6 +12,19 @@ const fetchConfirmBooking = async (scheduleID, patientID) => {
 };
 
 // ---------------------------------------------------------
+const confirmBooking = async (bookingData) => {
+	try {
+        console.log("Dữ liệu đặt lịch:", bookingData);
+		const response = await axios.post('/api/booking/confirm', bookingData);
+        console.log("Phản hồi từ server:", response);
+		return response;
+	} catch (error) {
+		console.error("Lỗi khi gọi API:", error.response ? error.response.data : error.message);
+		return { EC: -1, EM: "Lỗi kết nối đến server", DT: null };
+	}
+};
+
+// ---------------------------------------------------------
 const fetchBookingDetail = async (bookingId) => {
     const response = await axios.get(`/api/booking/read/${bookingId}`);
     return response;
@@ -82,6 +95,7 @@ const cancelBooking = (bookingId) => {
 
 // ---------------------------------------------------------
 export { 
+    confirmBooking,
     fetchConfirmBooking, 
     fetchBookingDetail, 
     fetchHistoryBookingDetail,

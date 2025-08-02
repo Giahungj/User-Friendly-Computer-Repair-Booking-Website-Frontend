@@ -107,6 +107,14 @@ $colors: (
 
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
 
+body {
+	font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	font-size: 1.25rem;
+	font-weight: 300;
+	line-height: 1.5;
+	margin: 0;
+}
+
 // // ==================================== MÀU NỀN =======================================================
     @each $color-name, $color-value in $colors {
         .bg-#{$color-name} {
@@ -120,17 +128,6 @@ $colors: (
             color: $color-value;
         }
     }
-
-    body {
-        font-family:'Nunito', sans-serif;
-    }
-
-
-
-
-.App {
-    font-family:'Nunito', sans-serif;
-}
 
 .App .loading-container {
     display: flex;
@@ -237,6 +234,11 @@ $colors: (
     background-color: white;
     min-width: 100%;
     padding: 8px 0;
+}
+
+
+.cursor-pointer {
+    cursor: pointer;
 }
 
 /* Khi hover vào mục chính, dropdown sẽ hiện */

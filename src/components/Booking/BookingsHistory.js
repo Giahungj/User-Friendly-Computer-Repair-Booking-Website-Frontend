@@ -86,7 +86,7 @@ const BookingsHistory = () => {
     if (bookings.length === 0) {
         return (
             <>
-                <div className="container py-4">
+                <div className="container py-5">
                     <div className="row my-2 align-items-center">
                         <div className="col">
                         <h4>Lịch sử khám bệnh</h4>
@@ -110,7 +110,7 @@ const BookingsHistory = () => {
 
     // Giao diện chính khi có dữ liệu
     return (
-        <div className="container py-4">
+        <div className="container py-5">
             <div className="row my-2 align-items-center">
                 <div className="col">
                 <h4>Lịch sử khám bệnh</h4>

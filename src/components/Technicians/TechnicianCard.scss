@@ -1,0 +1,28 @@
+.card-hover {
+	transition: box-shadow 0.3s ease, border-color 0.3s ease;
+	border: 1px solid transparent;
+}
+
+.card-hover:hover {
+	border-color: #bbdefb !important;
+	box-shadow: 0 0.25rem 0.75rem rgba(31, 138, 225, 0.2);
+}
+
+.card-hover:hover .info-box {
+	background-color: #ecf7ff !important;
+	transition: background-color 0.3s ease;
+}
+
+.button-hover {
+	background-color: #2196f3 !important;
+	color: #fff;
+}
+
+.button-hover:hover {
+	background-color: #95c8f1 !important;
+	color: #0d47a1;
+}
+
+.card, .info-box {
+    border-radius: 0.8rem;
+}

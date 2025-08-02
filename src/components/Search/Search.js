@@ -52,7 +52,7 @@ const Search = () => {
 
     if (error) {
         return (
-            <div className="container py-4">
+            <div className="container py-5">
                 <div className="alert alert-danger">
                     <h4 className="alert-heading menopause">Lỗi!</h4>
                     <p>{error}</p>
@@ -65,7 +65,7 @@ const Search = () => {
 
     if (doctors.length === 0 && specialties.length === 0 && facilities.length === 0) {
         return (
-            <div className="container py-4">
+            <div className="container py-5">
                 <div className="alert alert-info">
                     <h4 className="alert-heading">Không tìm thấy kết quả!</h4>
                     <p>Không có bác sĩ, chuyên khoa hoặc phòng khám nào phù hợp với từ khóa "<strong>{keyword}</strong>."</p>
@@ -77,7 +77,7 @@ const Search = () => {
     }
 
     return (
-        <div className="container py-4">
+        <div className="container py-5">
             <h5 className="mb-4">
                 Kết quả cho từ khóa: <span className="badge bg-primary">{keyword}</span>
             </h5>

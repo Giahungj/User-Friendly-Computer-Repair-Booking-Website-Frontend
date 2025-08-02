@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import NavHeader from "../Navigation/NavHeader";
 import Footer from "../Footer/Footer";
+import TestHeaderComponent from "../TestHeaderConmponent";
 
 // import { ThemeProvider, createTheme } from '@mui/material/styles';
 
@@ -10,7 +10,7 @@ const Home = () => {
     return (
         <div className="layout">
             <header>
-                <NavHeader />
+                <TestHeaderComponent />
             </header>
             <main className="content bg-light">
                 <Outlet />

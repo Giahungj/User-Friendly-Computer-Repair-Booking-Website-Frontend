@@ -1,13 +1,38 @@
 import axios from "../setUp/axios";
+
 // ---------------------------------------------------------
-export const loginUser = async (email, password) => {
+export const signUp = async ( email, password, name, phone ) => {
     try {
-        const response = await axios.post("/api/login", { email, password }, { withCredentials: true });
+        const response = await axios.post('/api/sign-up', { email, password, name, phone });
+        console.log(response)
         return response;
     } catch (error) {
-        console.error("Login failed:", error);
-        return null;
+        throw error;
     }
+};
+
+// ---------------------------------------------------------
+export const signInByEmail = async ({ email, password }) => {
+	try {
+        console.log("Attempting to sign in with email:", email);
+		const response = await axios.post("/api/sign-in-email", { email, password }, { withCredentials: true });
+		return response;
+	} catch (error) {
+		console.error("Login failed:", error);
+		return null;
+	}
+};
+
+// ---------------------------------------------------------
+export const signInByPhone = async ({ phone, password }) => {
+	try {
+        console.log("Attempting to sign in with phone:", phone);
+		const response = await axios.post("/api/sign-in-phone", { phone, password }, { withCredentials: true });
+		return response;
+	} catch (error) {
+		console.error("Login failed:", error);
+		return null;
+	}
 };
 
 // ---------------------------------------------------------
@@ -76,17 +101,6 @@ export const refreshAccessToken = async () => {
         console.error("Refresh token failed:", error);
         logoutUser();
         return null;
-    }
-};
-
-// ---------------------------------------------------------
-export const registerPatient = async (email, password, name, address, phone, citizenId, sex, dob) => {
-    try {
-        const response = await axios.post('/api/register-patient', {email, password, name, address, phone, citizenId, sex, dob});
-        console.log(response)
-        return response;
-    } catch (error) {
-        throw error;
     }
 };
 
