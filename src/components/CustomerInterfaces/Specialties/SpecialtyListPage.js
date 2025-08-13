@@ -26,8 +26,7 @@ const SpecialtyListPage = () => {
                     setSpecialties(res.DT);
                     setFilteredData(res.DT);
                     setLoading(false);
-                }, 2000);
-                console.log(filteredData)
+                }, 1000);
             } catch (error) {
                 console.error('Lỗi lấy danh sách chuyên môn:', error);
                 setError(true);
@@ -53,7 +52,7 @@ const SpecialtyListPage = () => {
     return (
         <div className="container py-5">
             <div className="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
-                <p className="lead mb-0">📋 Danh sách chuyên môn</p>
+                <p className="lead mb-4">📋 Danh sách chuyên môn</p>
                 <SearchSpecialties searchTerm={searchTerm} onSearch={handleSearch} />
             </div>
 

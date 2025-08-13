@@ -2,18 +2,10 @@ import axios from "../setUp/axios";
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-const getTechnicians = async (pageNum = 1) => {
+const getTechnicians = async () => {
     try {
-        const response = await axios.get(`api/ky-thuat-vien/danh-sach`, {
-            params: { page: pageNum },
-            timeout: 10000
-        });
-        return {
-            EC: 0,
-            EM: "Lấy danh sách kỹ thuật viên thành công",
-            DT: response.DT,
-            total: response.totalPages || response.DT.length
-        };
+        const response = await axios.get(`api/ky-thuat-vien/danh-sach`);
+        return response;
     } catch (error) {
         return { EC: -1, EM: error.message, DT: [] };
     }
@@ -21,7 +13,7 @@ const getTechnicians = async (pageNum = 1) => {
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-const getTechnicianById = async (technicianId) => {
+const getTechnicianById = async (technicianId, userId) => {
     try {
         const response = await axios.get(`api/ky-thuat-vien/${technicianId}/thong-tin/chi-tiet`);
         return response;

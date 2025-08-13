@@ -3,6 +3,8 @@ import { createContext, useState } from "react";
 export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
+    const [showLogin, setShowLogin] = useState(false);
+    const [showInternalLogin, setShowInternalLogin] = useState(false);
     const [auth, setAuth] = useState(() => {
         let storedUser = localStorage.getItem("user");
         return storedUser ? JSON.parse(storedUser) : { isAuthenticated: false, user: null, token: null };
@@ -19,7 +21,15 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ auth, loginContext, logoutContext }}>
+        <AuthContext.Provider value={{
+            auth,
+            loginContext,
+            logoutContext,
+            showLogin,
+            setShowLogin,
+            showInternalLogin,
+            setShowInternalLogin
+        }}>
             {children}
         </AuthContext.Provider>
     );

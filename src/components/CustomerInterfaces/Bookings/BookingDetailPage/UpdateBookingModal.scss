@@ -1,0 +1,17 @@
+.modal.fade.show .modal-dialog {
+	animation: slideIn 0.5s ease-in-out;
+}
+
+@keyframes slideIn {
+	from {
+		transform: translateX(-10em);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+body.modal-open {
+	overflow: hidden;
+}
