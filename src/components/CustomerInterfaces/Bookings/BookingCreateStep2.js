@@ -24,7 +24,6 @@ function BookingCreateStep2() {
 
     const workSchedule = useState(bookingData?.workSchedule || null);
     const customer = useState(bookingData?.customer || null);
-    console.log("BookingCreateStep2 - bookingData:", bookingData);
     const [loading, setLoading] = useState(!bookingData);
     const [error, setError] = useState(false);
 

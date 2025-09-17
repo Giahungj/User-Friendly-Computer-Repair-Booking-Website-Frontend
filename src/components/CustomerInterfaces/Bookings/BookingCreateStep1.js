@@ -49,7 +49,6 @@ function BookingCreateStep1() {
             }
             try {
                 const res = await getDataForCreateBooking({ workScheduleId, userId: auth.user.user_id });
-                console.log("BookingCreateStep1 - getDataForCreateBooking response:", res);
                 setTimeout(() => {
                     if (res.EC === 1) {
                         setError(1);

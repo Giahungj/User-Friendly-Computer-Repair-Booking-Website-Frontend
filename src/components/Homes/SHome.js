@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Footer from "../Footer/Footer";
-import StoreManagerHeader from "../Header/SHeader";
+import StoreManagerHeader from "../Headers/SHeader";
 
 const SHome = () => {
     return (

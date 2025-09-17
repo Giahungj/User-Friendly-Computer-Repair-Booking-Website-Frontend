@@ -15,7 +15,6 @@ import {
 	HelpOutlineOutlined,
 	Logout
 } from '@mui/icons-material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const Header = () => {
 	const navigate = useNavigate();
@@ -198,7 +197,16 @@ const Header = () => {
 			invertedColors
 			sx={{ display: 'flex', alignItems: 'center', py: 0, px: 4, background: '#fff', borderBottom: '1px solid #ccc' }}
 		>
-			<h1 className="fw-bold text-primary">TechFix</h1>
+			<h1 
+				style={{ 
+					color: '#2196f3', 
+					fontWeight: '700', 
+					fontSize: '2rem', 
+					letterSpacing: '1px', 
+				}}
+			>
+				TechFix
+			</h1>
 			<Box sx={{ flexGrow: 1, display: 'flex', gap: 0, px: 2 }}>
 				{[
                     { label: 'Trang chủ', path: '/' },

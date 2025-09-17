@@ -17,7 +17,6 @@ function UpdateBookingModal({ open, onClose, booking, bookingId }) {
 
 	const [loading, setLoading] = useState(false);
 	useEffect(() => {
-		console.log(booking);
 		if (open && booking) {
 			const data = {
 				deviceType: booking.device_type,

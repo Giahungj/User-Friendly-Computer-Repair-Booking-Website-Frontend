@@ -61,13 +61,6 @@ const cancelRepairBooking = async (bookingId, reason = "") => {
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 const updateRepairBooking = async (bookingId, data = {}) => {
 	try {
-        console.log("Dữ liệu gửi đi:", {
-            issueImage: data.issueImage,
-            deviceType: data.deviceType || "",
-            model: data.model || "",
-            brand: data.brand || "",
-            issueDescription: data.issueDescription || ""
-        });
 		const formData = new FormData();
 		formData.append("issueImage", data.issueImage);
 		formData.append("deviceType", data.deviceType || "");
@@ -98,9 +91,23 @@ const getCustomerRepairBookings = async (userId) => {
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+const getRepairBookingsForStoreManager = async (storeManagerId) => {
+    try {
+        const response = await axios.get(`/api/cua-hang-truong/${storeManagerId}/don-dat-lich/danh-sach`);
+        return response;
+    } catch (error) {
+        console.error(`Lấy danh sách lịch hẹn thất bại (storeManagerId ${storeManagerId}):`, error.message);
+        return { EC: -1, EM: error.message || "Lỗi không xác định", DT: [] };
+    }
+};
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 export {
     getDataForCreateBooking,
     createRepairBooking, cancelRepairBooking, updateRepairBooking,
     getRepairBookingDetail,
     getCustomerRepairBookings,
+
+    getRepairBookingsForStoreManager,
 }

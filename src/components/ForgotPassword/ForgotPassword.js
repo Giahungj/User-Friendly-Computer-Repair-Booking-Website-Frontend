@@ -24,7 +24,6 @@ const ForgotPassword = () => {
         setLoading(true);
         try {
             const response = await forgotPassword({ emailOrPhone, type: isEmail ? "email" : "phone" });
-            console.log(response);
             if (response.EC === 0) {
                 navigate("/verify-otp", { state: { emailOrPhone } });
             } else {

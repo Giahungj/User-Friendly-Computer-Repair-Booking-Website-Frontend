@@ -4,7 +4,6 @@ import axios from "../setUp/axios";
 export const signUp = async ( email, password, name, phone ) => {
     try {
         const response = await axios.post('/api/sign-up', { email, password, name, phone });
-        console.log(response)
         return response;
     } catch (error) {
         throw error;
@@ -14,7 +13,6 @@ export const signUp = async ( email, password, name, phone ) => {
 // ---------------------------------------------------------
 export const signInByEmail = async ({ email, password }) => {
 	try {
-        console.log("Attempting to sign in with email:", email);
 		const response = await axios.post("/api/sign-in-email", { email, password }, { withCredentials: true });
 		return response;
 	} catch (error) {
@@ -26,8 +24,29 @@ export const signInByEmail = async ({ email, password }) => {
 // ---------------------------------------------------------
 export const signInByPhone = async ({ phone, password }) => {
 	try {
-        console.log("Attempting to sign in with phone:", phone);
 		const response = await axios.post("/api/sign-in-phone", { phone, password }, { withCredentials: true });
+		return response;
+	} catch (error) {
+		console.error("Login failed:", error);
+		return null;
+	}
+};
+
+// ---------------------------------------------------------
+export const signInByEmailForStoreManager = async ({ email, password }) => {
+	try {
+		const response = await axios.post("/api/sign-in-email/store-manager", { email, password }, { withCredentials: true });
+		return response;
+	} catch (error) {
+		console.error("Login failed:", error);
+		return null;
+	}
+};
+
+// ---------------------------------------------------------
+export const signInByPhoneForStoreManager = async ({ phone, password }) => {
+	try {
+		const response = await axios.post("/api/sign-in-phone/store-manager", { phone, password }, { withCredentials: true });
 		return response;
 	} catch (error) {
 		console.error("Login failed:", error);
@@ -101,23 +120,6 @@ export const refreshAccessToken = async () => {
         console.error("Refresh token failed:", error);
         logoutUser();
         return null;
-    }
-};
-
-// ---------------------------------------------------------
-export const registerDoctor = async (doctorData) => {
-    try {
-        for (const pair of doctorData.entries()) {
-            if (pair[0] === 'avatar' && pair[1]) {
-                console.log(pair[0], pair[1].name);
-            } else {
-                console.log(pair[0], pair[1]);
-            }
-        }
-        const response = await axios.post('/api/register-doctor', doctorData);
-        return response;
-    } catch (error) {
-        throw error;
     }
 };
 

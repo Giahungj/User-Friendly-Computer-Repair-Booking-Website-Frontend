@@ -9,7 +9,6 @@ const createNewUser = (dataUser) => axios.post("/api/user/create", dataUser);
 const updateCurrentUser = async (formData) => {
     try {
         const response = await axios.put("/api/user/update", formData);
-        console.log(response)
         return response;
     } catch (error) {
         console.error("FetchFalse:", error);
