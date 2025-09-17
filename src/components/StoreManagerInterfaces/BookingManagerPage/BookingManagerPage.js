@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import { getRepairBookingsForStoreManager } from "../../../services/RepairBookingService";
 
-import LoadingAndError from "../../../routes/commons/LoadingAndError";
+import LoadingAndError from "../../commons/LoadingAndError";
 import HeaderBar from "./HeaderBar";
 import FilterPanel from "./FilterPanel";
 import StatisticsCard from "./StatisticsCard";
@@ -101,6 +101,11 @@ function BookingManagementPage() {
 
 	return (
 		<div className="container py-5">
+			<div className="card border-0 shadow-sm rounded mb-3">
+                <div className="card-body text-center">
+                    <p className="lead fs-3 m-0">Quản lý Lịch làm việc</p>
+                </div>
+            </div>
 			<HeaderBar
 				onToday={() => handleFilter({ date: "2025-08-20" })}
 				onThisWeek={() => console.log("Filter this week (TODO)")}

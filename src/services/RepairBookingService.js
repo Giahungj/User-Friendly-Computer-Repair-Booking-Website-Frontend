@@ -103,11 +103,52 @@ const getRepairBookingsForStoreManager = async (storeManagerId) => {
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+const getRepairBookingDetailForStoreManager = async (repair_booking_id) => {
+    try {
+        const response = await axios.get(`/api/cua-hang-truong/don-dat-lich/${repair_booking_id}/chi-tiet`);
+        return response;
+    } catch (error) {
+        console.error(`Lấy danh sách lịch hẹn thất bại`, error.message);
+        return { EC: -1, EM: error.message || "Lỗi không xác định", DT: [] };
+    }
+};
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+const approveRepairBooking = async (repair_booking_id) => {
+    try {
+        const response = await axios.put(`/api/cua-hang-truong/don-dat-lich/duyet-don`, { repair_booking_id });
+        return response;
+    } catch (error) {
+        console.error(`Duyệt đơn thất bại:`, error.message);
+        return { EC: -1, EM: error.message || "Lỗi không xác định", DT: [] };
+    }
+};
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+const rejectRepairBooking = async (repair_booking_id) => {
+    try {
+        const response = await axios.put(`/api/cua-hang-truong/don-dat-lich/tu-choi-don`, { repair_booking_id });
+        return response;
+    } catch (error) {
+        console.error(`Duyệt đơn thất bại:`, error.message);
+        return { EC: -1, EM: error.message || "Lỗi không xác định", DT: [] };
+    }
+};
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 export {
     getDataForCreateBooking,
-    createRepairBooking, cancelRepairBooking, updateRepairBooking,
+    createRepairBooking,
+    cancelRepairBooking,
+    updateRepairBooking,
     getRepairBookingDetail,
     getCustomerRepairBookings,
 
     getRepairBookingsForStoreManager,
+    getRepairBookingDetailForStoreManager,
+    approveRepairBooking, 
+    rejectRepairBooking,
 }
