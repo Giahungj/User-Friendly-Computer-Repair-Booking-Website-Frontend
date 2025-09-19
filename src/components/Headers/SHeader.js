@@ -92,13 +92,13 @@ const StoreManagerHeader = () => {
 				<MenuItem disabled>{auth?.user?.name}</MenuItem>
 				<Divider />
 				<Typography variant="caption" className="px-3 text-muted">Quản lý</Typography>
-				<MenuItem onClick={() => handleNavigate('/store-manager/technicians')}>
+				<MenuItem onClick={() => handleNavigate('/cua-hang-truong/ky-thuat-vien/danh-sach')}>
 					<PeopleAltOutlined fontSize="small" sx={{ mr: 1 }} /> Quản lý kỹ thuật viên
 				</MenuItem>
-				<MenuItem onClick={() => handleNavigate('/store-manager/orders')}>
+				<MenuItem onClick={() => handleNavigate('/cua-hang-truong/don-dat-lich/danh-sach')}>
 					<Inventory2Outlined fontSize="small" sx={{ mr: 1 }} /> Quản lý đơn hàng
 				</MenuItem>
-				<MenuItem onClick={() => handleNavigate('/store-manager/reports')}>
+				<MenuItem onClick={() => handleNavigate('/cua-hang-truong/bao-cao')}>
 					<BarChartOutlined fontSize="small" sx={{ mr: 1 }} /> Thống kê & báo cáo
 				</MenuItem>
 

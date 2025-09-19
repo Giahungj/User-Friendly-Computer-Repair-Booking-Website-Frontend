@@ -1,46 +1,56 @@
 import axios from "../setUp/axios";
 
-// ---------------------------------------------------------
-const fetchDoctorBookingStats = async (doctorId) => {
-    try {
-        console.log("Fetching doctor booking stats...");
-        const response = await axios.get(`/api/doctor/statistics/bookings/read/${doctorId}`);
-        return response;
-    } catch (error) {
-        console.error("Error fetching doctor booking stats:", error);
-        return { data: { EC: 1, EM: "Không thể tải dữ liệu thống kê", DT: [] } };
-    }
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+const getAppointmentsSummaryByManager = async (storeManagerId, filters) => {
+	try {
+		console.log(filters)
+		const response = await axios.get(
+			`/api/cua-hang-truong/${storeManagerId}/thong-ke/so-lieu/tong-quat`,
+			{
+				params: {
+					startDate: filters.startDate,
+					endDate: filters.endDate,
+					technicianId: filters.technicianId
+				}
+			}
+		);
+		console.log(response)
+		return response;
+	} catch (error) {
+		console.error("❌ [DEBUG] Lỗi khi gọi API:", error);
+		return { EC: -1, EM: error.message || "Lỗi không xác định", DT: [] };
+	}
 };
 
-// ---------------------------------------------------------
-const fetchPatientStats = async (doctorId) => {
-    try {
-        console.log("Fetching patient stats...");
-        const response = await axios.get(`/api/doctor/statistics/patients/read/${doctorId}`);
-        console.log("Response data:", response);
-        return response;
-    } catch (error) {
-        console.error("Error fetching patient stats:", error);
-        return { data: { EC: 1, EM: "Không thể tải dữ liệu thống kê bệnh nhân", DT: [] } };
-    }
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+const getDataBookingList = async (storeManagerId, filters) => {
+	try {
+		const response = await axios.get(
+			`/api/cua-hang-truong/${storeManagerId}/thong-ke/danh-sach/lich-hen`,
+			{ params: filters }
+		);
+		return response;
+	} catch (error) {
+		console.error("❌ [DEBUG] Lỗi khi lấy dữ liệu biểu đồ tròn:", error);
+		return { EC: -1, EM: error.message || "Lỗi không xác định", DT: [] };
+	}
 };
-
-// ---------------------------------------------------------
-const fetchRevenueStats = async (doctorId) => {
-    try {
-        console.log("Fetching revenue stats...");
-        const response = await axios.get(`/api/doctor/statistics/revenues/read/${doctorId}`);
-        console.log("Response data:", response);
-        return response;
-    } catch (error) {
-        console.error("Error fetching revenue stats:", error);
-        return { data: { EC: 1, EM: "Không thể tải dữ liệu thống kê doanh thu", DT: [] } };
-    }
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+const getDataLineChart = async (storeManagerId, filters) => {
+	try {
+		const response = await axios.get(
+			`/api/cua-hang-truong/${storeManagerId}/thong-ke/bieu-do/duong`,
+			{ params: filters }
+		);
+		return response;
+	} catch (error) {
+		console.error("❌ [DEBUG] Lỗi khi lấy dữ liệu biểu đồ tròn:", error);
+		return { EC: -1, EM: error.message || "Lỗi không xác định", DT: [] };
+	}
 };
-
-// ---------------------------------------------------------
-export { 
-    fetchDoctorBookingStats, 
-    fetchPatientStats, 
-    fetchRevenueStats 
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+export default { 
+	getAppointmentsSummaryByManager, 
+	getDataBookingList,
+	getDataLineChart,
 };

@@ -9,7 +9,7 @@ function App() {
         <div className='app-container'>
             <AppRoutes />
         </div>
-        <ToastContainer position="top-right" autoClose={2000} />
+        <ToastContainer position="top-right" autoClose={1000} />
     </div>
   );
 }

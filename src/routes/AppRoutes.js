@@ -39,6 +39,7 @@ import WorkSchedulePage from '../components/StoreManagerInterfaces/WorkScheduleM
 import TechnicianManagerPage from '../components/StoreManagerInterfaces/TechnicianManagerPage/TechnicaianManagerPage.js';
 import BookingManagerPage from '../components/StoreManagerInterfaces/BookingManagerPage/BookingManagerPage.js';
 import ManagerBookingDetailPage from '../components/StoreManagerInterfaces/BookingManagerPage/BookingDetailPage.js';
+import StatisticsPage from '../components/StoreManagerInterfaces/StatisticPages/StatisticsPage.js';
 
 // Route Guards
 import PrivateRoutes from './PrivateRoutes';
@@ -89,7 +90,9 @@ const AppRoutes = () => {
 						<Route path="cua-hang-truong/don-dat-lich/danh-sach" element={<BookingManagerPage />} />
 						<Route path="cua-hang-truong/don-dat-lich/:repair_booking_id/chi-tiet" element={<ManagerBookingDetailPage />} />
 						<Route path="cua-hang-truong/lich-lam-viec/danh-sach" element={<WorkSchedulePage />} />
-						<Route path="cua-hang-truong/bao-cao" element={<WorkSchedulePage />} />
+						<Route path="cua-hang-truong/bao-cao" element={<StatisticsPage />} />
+
+                        {/* Statistic Routes */}
                 </Route>
             </Route>
 
