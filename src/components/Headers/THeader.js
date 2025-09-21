@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
-import TabAuthComponent from '../TabAuthComponent';
+import TabAuthComponent from '../Auths/TabAuthComponent';
 import { Sheet } from '@mui/joy';
 import { Button, Badge, Menu, MenuItem, Avatar, Box, Divider, Typography } from '@mui/material';
 import {
@@ -112,13 +112,13 @@ const Header = () => {
 				{/* Nhóm: Lịch hẹn */}
 				<Divider />
 				<Typography variant="caption" className="px-3 text-muted">Lịch hẹn</Typography>
-				<MenuItem onClick={() => handleNavigate(`/dat-lich/khach-hang/${auth.user.user_id}/danh-sach`)}>
-					<EventNoteOutlined fontSize="small" sx={{ mr: 1 }} /> Lịch sửa chữa của tôi
+				<MenuItem onClick={() => handleNavigate(`/ky-thuat-vien/don-dat-lich/danh-sach`)}>
+					<EventNoteOutlined fontSize="small" sx={{ mr: 1 }} /> Đơn sửa chữa của tôi
 				</MenuItem>
-				<MenuItem onClick={() => handleNavigate(`/dat-lich/khach-hang/${auth.user.user_id}/danh-sach?status=completed`)}>
-					<HistoryOutlined fontSize="small" sx={{ mr: 1 }} /> Lịch sử & Hoàn thành
+				<MenuItem onClick={() => handleNavigate(`/ky-thuat-vien/don-dat-lich/danh-sach?status=completed`)}>
+					<HistoryOutlined fontSize="small" sx={{ mr: 1 }} /> Hoàn thành
 				</MenuItem>
-				<MenuItem onClick={() => handleNavigate(`/dat-lich/khach-hang/${auth.user.user_id}/danh-sach?status=pending`)}>
+				<MenuItem onClick={() => handleNavigate(`/ky-thuat-vien/don-dat-lich/danh-sach?status=pending`)}>
 					<HistoryOutlined fontSize="small" sx={{ mr: 1 }} /> Chờ duyệt
 				</MenuItem>
 					
@@ -175,12 +175,11 @@ const Header = () => {
 			<h1 className="fw-bold text-primary">TechFix</h1>
 			<Box sx={{ flexGrow: 1, display: 'flex', gap: 0, px: 2 }}>
 				{[
-                    { label: 'Trang chủ', path: '/' },
-                    { label: 'Chuyên mục', path: '/chuyen-muc/tat-ca' },
-                    { label: 'Video', path: '/videos' },
-                    { label: 'Kỹ thuật viên', path: '/ky-thuat-vien/tat-ca' },
-                    { label: 'Cửa hàng', path: '/cua-hang/tat-ca' },
-                    { label: 'Giới thiệu', path: '/gioi-thieu/ve-chung-toi' }
+                    { label: 'Trang chủ', path: '/ky-thuat-vien/dashboard' },
+					{ label: 'Đơn sửa chữa', path: '/ky-thuat-vien/don-dat-lich/danh-sach' },
+					{ label: 'Lịch làm việc', path: '/ky-thuat-vien/lich-lam-viec' },
+					{ label: 'Hồ sơ', path: '/ky-thuat-vien/ho-so' },
+					{ label: 'Đánh giá', path: '/ky-thuat-vien/danh-gia' },
                 ].map((item, i) => (
                     <NavLink key={i} to={item.path}>
                         {({ isActive }) => (

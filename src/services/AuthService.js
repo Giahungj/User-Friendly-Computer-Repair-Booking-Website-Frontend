@@ -44,6 +44,28 @@ export const signInByEmailForStoreManager = async ({ email, password }) => {
 };
 
 // ---------------------------------------------------------
+export const signInByPhoneForTechnician = async ({ phone, password }) => {
+	try {
+		const response = await axios.post("/api/sign-in-phone/technician", { phone, password }, { withCredentials: true });
+		return response;
+	} catch (error) {
+		console.error("Login failed:", error);
+		return null;
+	}
+};
+
+// ---------------------------------------------------------
+export const signInByEmailForTechnician = async ({ email, password }) => {
+	try {
+		const response = await axios.post("/api/sign-in-email/technician", { email, password }, { withCredentials: true });
+		return response;
+	} catch (error) {
+		console.error("Login failed:", error);
+		return null;
+	}
+};
+
+// ---------------------------------------------------------
 export const signInByPhoneForStoreManager = async ({ phone, password }) => {
 	try {
 		const response = await axios.post("/api/sign-in-phone/store-manager", { phone, password }, { withCredentials: true });

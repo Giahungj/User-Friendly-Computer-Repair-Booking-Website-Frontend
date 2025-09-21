@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Footer from "../Footer/Footer";
-import TechnicianHeader from "../Header/THeader";
+import TechnicianHeader from "../Headers/THeader";
 
 const THome = () => {
     return (

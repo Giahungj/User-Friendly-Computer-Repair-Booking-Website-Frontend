@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
-import { signInByEmail, signInByPhone } from '../../services/AuthService';
+import { signInByEmailForTechnician, signInByPhoneForTechnician } from '../../services/AuthService';
 import { Button, TextField, InputAdornment } from '@mui/material';
 
 function TLoginForm() {
@@ -35,8 +35,8 @@ function TLoginForm() {
 
 		try {
 			const res = loginMethod === 'phone'
-				? await signInByPhone({ phone, password })
-				: await signInByEmail({ email, password });
+				? await signInByPhoneForTechnician({ phone, password })
+				: await signInByEmailForTechnician({ email, password });
 
 			if (res?.EC !== 0) {
 				toast.error(res?.EM || 'Đăng nhập thất bại');
