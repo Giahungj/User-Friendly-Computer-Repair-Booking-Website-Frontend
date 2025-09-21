@@ -29,12 +29,12 @@ const TechnicianDashboardPage = () => {
 
 	return (
 		<div className="container py-5">
-			<div className="card text-center p-4 mb-4">
-				<h4 className="mb-3">Chào mừng bạn đến với Dashboard Kỹ Thuật Viên!</h4>
+			<div className="card text-center p-3 shadow-sm mb-4">
+				<h4>Chào mừng bạn đến với Dashboard Kỹ Thuật Viên!</h4>
 				<p>Tại đây bạn sẽ quản lý lịch làm việc, đơn đặt lịch và đánh giá.</p>
 			</div>
 
-			<div className="row g-4">
+			<div className="row g-2">
 				<div className="col d-flex">
 					<TechnicianStats data={technicianStatsData} />
 				</div>

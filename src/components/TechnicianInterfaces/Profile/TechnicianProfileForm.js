@@ -1,4 +1,5 @@
-import { Star, StarHalf, StarOutline } from "@mui/icons-material";
+import { Avatar, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
+import { Phone, Store, Build, Star, AccessTime, StarHalf, StarOutline } from '@mui/icons-material';
 
 const TechnicianProfileForm = ({ data }) => {
 	const renderRating = (rating) => {
@@ -12,42 +13,58 @@ const TechnicianProfileForm = ({ data }) => {
 	};
 
 	return (
-		<div className="card p-3 w-100 h-100">
+		<div className="card h-100 p-4 shadow-sm">
 			<div className="d-flex align-items-center mb-4">
-				<img
+				<Avatar
 					src={`http://localhost:8080/images/${data.User?.avatar}`}
 					alt="avatar"
-					className="rounded-circle me-3"
-					style={{ width: "80px", height: "80px", objectFit: "cover" }}
+					sx={{ width: 80, height: 80, mr: 2 }}
 				/>
 				<div>
-					<h5 className="mb-1">{data.User?.name}</h5>
-					<small className="text-muted">{data.User?.email}</small>
+					<Typography variant="h5" component="h5" sx={{ mb: 1 }}>
+						{data.User?.name}
+					</Typography>
+					<Typography variant="body2" color="text.secondary">
+						{data.User?.email}
+					</Typography>
 				</div>
 			</div>
 
-			<ul className="list-group list-group-flush">
-				<li className="list-group-item d-flex justify-content-between">
-					<span>Điện thoại</span>
-					<span>{data.User?.phone}</span>
-				</li>
-				<li className="list-group-item d-flex justify-content-between">
-					<span>Chi nhánh</span>
-					<span>{data.Store?.name} ({data.Store?.address})</span>
-				</li>
-				<li className="list-group-item d-flex justify-content-between">
-					<span>Chuyên môn</span>
-					<span>{data.Specialties?.map(s => s.name).join(", ")}</span>
-				</li>
-				<li className="list-group-item d-flex justify-content-between">
-					<span>Rating</span>
-					<span>{renderRating(data.rating || 4.5)}</span>
-				</li>
-				<li className="list-group-item d-flex justify-content-between">
-					<span>Trạng thái hoạt động</span>
-					<span>{data.User?.last_active ? new Date(data.User.last_active).toLocaleString() : "Chưa từng hoạt động"}</span>
-				</li>
-			</ul>
+			<List>
+				<ListItem divider>
+					<ListItemIcon>
+						<Phone />
+					</ListItemIcon>
+					<ListItemText primary="Điện thoại" secondary={data.User?.phone} />
+				</ListItem>
+				<ListItem divider>
+					<ListItemIcon>
+						<Store />
+					</ListItemIcon>
+					<ListItemText primary="Chi nhánh" secondary={`${data.Store?.name} (${data.Store?.address})`} />
+				</ListItem>
+				<ListItem divider>
+					<ListItemIcon>
+						<Build />
+					</ListItemIcon>
+					<ListItemText primary="Chuyên môn" secondary={data.Specialties?.map(s => s.name).join(", ")} />
+				</ListItem>
+				<ListItem divider>
+					<ListItemIcon>
+						<Star />
+					</ListItemIcon>
+					<ListItemText primary="Rating" secondary={renderRating(data.rating || 4.5)} />
+				</ListItem>
+				<ListItem>
+					<ListItemIcon>
+						<AccessTime />
+					</ListItemIcon>
+					<ListItemText
+						primary="Trạng thái hoạt động"
+						secondary={data.User?.last_active ? new Date(data.User.last_active).toLocaleString() : "Chưa từng hoạt động"}
+					/>
+				</ListItem>
+			</List>
 		</div>
 	);
 };

@@ -1,26 +1,35 @@
 // TechnicianScheduleFilter.js
-import React from "react";
+import { List, ListItem, TextField, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
 
 const TechnicianScheduleFilter = ({ filters, onChange }) => {
 	return (
-		<div className="card p-3 sticky-top" style={{ top: "20px", zIndex: 1020 }}>
-			<div className="d-flex flex-column">
-				<input
-					type="date"
-					className="form-control mb-2"
-					value={filters.date || ""}
-					onChange={(e) => onChange({ ...filters, date: e.target.value })}
-				/>
-				<select
-					className="form-select"
-					value={filters.status || ""}
-					onChange={(e) => onChange({ ...filters, status: e.target.value })}
-				>
-					<option value="">Tất cả trạng thái</option>
-					<option value="empted">Trống</option>
-					<option value="filled">Đầy</option>
-				</select>
-			</div>
+		<div className="card p-3 sticky-top shadow-sm" style={{ top: "20px", zIndex: 1020 }}>
+			<List>
+				<ListItem sx={{ p: 1 }}>
+					<TextField
+						fullWidth
+						type="date"
+						label="Chọn ngày"
+						value={filters.date || ""}
+						onChange={(e) => onChange({ ...filters, date: e.target.value })}
+						InputLabelProps={{ shrink: true }}
+					/>
+				</ListItem>
+				<ListItem sx={{ p: 1 }}>
+					<FormControl fullWidth>
+						<InputLabel>Trạng thái</InputLabel>
+						<Select
+							value={filters.status || ""}
+							onChange={(e) => onChange({ ...filters, status: e.target.value })}
+							label="Trạng thái"
+						>
+							<MenuItem value="">Tất cả trạng thái</MenuItem>
+							<MenuItem value="empted">Trống</MenuItem>
+							<MenuItem value="filled">Đầy</MenuItem>
+						</Select>
+					</FormControl>
+				</ListItem>
+			</List>
 		</div>
 	);
 };

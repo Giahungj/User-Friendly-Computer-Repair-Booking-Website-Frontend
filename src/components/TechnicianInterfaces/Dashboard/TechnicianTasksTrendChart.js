@@ -34,7 +34,7 @@ const TechnicianTasksTrendChart = ({ data }) => {
 	};
 
 	return (
-		<div className="card p-3 w-100 h-100">
+		<div className="card p-3 shadow-sm w-100 h-100">
 			<h5 className="mb-3 text-center">Xu hướng Nhiệm vụ</h5>
 			<div className="card-body">
 				<Line data={chartData} />

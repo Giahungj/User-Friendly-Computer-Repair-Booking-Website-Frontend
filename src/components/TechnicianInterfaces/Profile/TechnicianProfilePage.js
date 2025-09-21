@@ -29,18 +29,18 @@ const TechnicianProfilePage = () => {
 
 	return (
 		<div className="container py-5">
-			<div className="card text-center p-4 mb-4">
-				<h4 className="mb-3">Hồ sơ Kỹ Thuật Viên</h4>
-			</div>
-            <div className="row g-4">
-				<div className="col d-flex">
-    			    <TechnicianProfileForm data={technician} />
-				</div>
-                <div className="col d-flex">
-		    	    <TechnicianPasswordChange />
-				</div>
+            <div className="card text-center p-4 mb-4 shadow-sm">
+                <h4 className="">Hồ sơ Kỹ Thuật Viên</h4>
             </div>
-		</div>
+            <div className="row g-4">
+                <div className="col-lg-6">
+                    <TechnicianProfileForm data={technician} />
+                </div>
+                <div className="col-lg-6">
+                    <TechnicianPasswordChange />
+                </div>
+            </div>
+        </div>
 	);
 };
 

@@ -1,72 +1,93 @@
-import "./TechnicianScheduleDetail.css"
+import React, { useState } from 'react';
+import {
+	Box, Card, IconButton, Typography, List, ListItem, ListItemText,
+	ListItemIcon, Tabs, Tab
+} from '@mui/material';
+import {
+	CalendarToday, AccessTime, People, Store, Person
+} from '@mui/icons-material';
+import CloseIcon from '@mui/icons-material/Close';
+
 const TechnicianScheduleDetail = ({ schedule, onClose }) => {
-	// Nếu không có schedule thật, tạo dữ liệu ảo
-	if (!schedule) return (null)
+	const [tab, setTab] = useState(0);
+	if (!schedule) return null;
+
+	const formatDate = d => new Date(d).toLocaleDateString("vi-VN");
+	const getShiftText = s => s === "1" ? "Sáng" : "Chiều";
+
+	const RepairBookings = () => (
+		schedule.RepairBooking?.length ? (
+			<List sx={{ maxHeight: 200, overflow: 'auto', p: 0 }}>
+				{schedule.RepairBooking.map(rb => (
+					<ListItem key={rb.booking_id} divider sx={{ borderRadius: 1, mb: 0.5, bgcolor: 'background.paper', boxShadow: 1, py: 0.5 }}>
+						<ListItemText
+							primary={<Typography variant="body2" fontWeight="medium">{rb.Customer?.name || "Khách hàng không xác định"}</Typography>}
+							secondary={
+								<Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.2 }}>
+									<Typography variant="caption"><strong>Người tạo:</strong> {rb.User?.name || "Không xác định"}</Typography>
+									<Typography variant="caption"><strong>Trạng thái:</strong> {rb.status || "Chưa có"}</Typography>
+								</Box>
+							}
+						/>
+					</ListItem>
+				))}
+			</List>
+		) : (
+			<Typography variant="body2" color="text.secondary" textAlign="center" mt={1}>
+				Không có đơn sửa chữa
+			</Typography>
+		)
+	);
+
+	const ScheduleInfo = () => (
+		<List sx={{ p: 0 }}>
+			{[
+				{ icon: <CalendarToday color="primary" fontSize="small" />, label: "Ngày", value: formatDate(schedule.work_date) },
+				{ icon: <AccessTime color="primary" fontSize="small" />, label: "Ca làm việc", value: getShiftText(schedule.shift) },
+				{ icon: <People color="primary" fontSize="small" />, label: "Số lượng", value: `${schedule.current_number}/${schedule.max_number}` },
+				{ icon: <Store color="primary" fontSize="small" />, label: "Cửa hàng", value: schedule.Technician?.Store?.name || "Không xác định" },
+				{ icon: <Person color="primary" fontSize="small" />, label: "Kỹ thuật viên", value: schedule.Technician?.User?.name || "Không xác định" }
+			].map((item, i) => (
+				<ListItem key={i} divider={i < 4} sx={{ py: 0.5 }}>
+					<ListItemIcon>{item.icon}</ListItemIcon>
+					<ListItemText
+						primary={<Typography variant="body2">{item.label}</Typography>}
+						secondary={<Typography variant="caption">{item.value}</Typography>}
+					/>
+				</ListItem>
+			))}
+		</List>
+	);
 
 	return (
 		<>
-			<div 
-				className="position-fixed top-0 start-0 w-100 h-100"
+			<Box
+				sx={{ position: 'fixed', inset: 0, bgcolor: 'rgba(0, 0, 0, 0.5)', zIndex: 1050 }}
 				onClick={onClose}
 			/>
+			<Card
+				sx={{
+					position: 'fixed', top: '10%', right: 10, zIndex: 1060,
+					minWidth: '25em', maxWidth: '40em', maxHeight: '70vh',
+					overflow: 'auto', p: 2, boxShadow: 4, borderRadius: 2
+				}}
+			>
+				<Box position="relative">
+					<IconButton onClick={onClose} size="small" sx={{ position: 'absolute', top: 4, right: 4 }}>
+						<CloseIcon fontSize="small" />
+					</IconButton>
+					<Typography variant="h6" textAlign="center" fontWeight="medium" mb={1}>
+						Chi tiết lịch làm việc
+					</Typography>
+				</Box>
 
-			<div 
-                id="technician-schedule-detail"
-                className="card p-3 shadow-lg position-fixed fade-in"
-                style={{
-                    top: '10%',
-                    right: '10px',
-                    zIndex: 1060,
-                    minWidth: '30em',
-                    maxWidth: '50em'
-                }}
-            >
-                <button
-                    className="btn btn-light btn-sm position-absolute top-0 end-0 m-2"
-                    onClick={onClose}
-                >
-                    X
-                </button>
+				<Tabs value={tab} onChange={(e, v) => setTab(v)} centered sx={{ mb: 1 }}>
+					<Tab label="Thông tin" sx={{ textTransform: 'none', fontSize: '0.9rem' }} />
+					<Tab label="Đơn sửa chữa" sx={{ textTransform: 'none', fontSize: '0.9rem' }} />
+				</Tabs>
 
-                <h5 className="mb-3">Chi tiết lịch làm việc</h5>
-
-                <div className="row">
-                    {/* Thông tin lịch bên trái */}
-                    <div className="col-md-6">
-                        <p><strong>Ngày:</strong> {new Date(schedule.work_date).toLocaleDateString("vi-VN")}</p>
-                        <p><strong>Ca:</strong> {schedule.shift === "1" ? "Sáng" : "Chiều"}</p>
-                        <p><strong>Số lượng hiện tại:</strong> {schedule.current_number}/{schedule.max_number}</p>
-                        <p><strong>Cửa hàng:</strong> {schedule.Technician?.Store?.name}</p>
-                        <p><strong>Kỹ thuật viên:</strong> {schedule.Technician?.User?.name || "Không có"}</p>
-                        {schedule.Technician?.User?.avatar && (
-                            <img 
-                                src={`http://localhost:8080/images${schedule.Technician.User.avatar}`} 
-                                alt="Avatar" 
-                                className="img-thumbnail my-2" 
-                                style={{ maxWidth: 120 }} 
-                            />
-                        )}
-                    </div>
-
-                    {/* Danh sách RepairBooking bên phải */}
-                    <div className="col-md-6">
-                        {schedule.RepairBooking?.length > 0 && (
-                            <div>
-                                <h6>Đơn sửa chữa:</h6>
-                                <ul className="list-group">
-                                    {schedule.RepairBooking.map(rb => (
-                                        <li key={rb.booking_id} className="list-group-item">
-                                            <p><strong>Khách hàng:</strong> {rb.Customer?.name || "Không có"}</p>
-                                            <p><strong>Người tạo:</strong> {rb.User?.name || "Không có"}</p>
-                                            <p><strong>Trạng thái:</strong> {rb.status || "Chưa có"}</p>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
+				<Box p={1}>{tab === 0 ? <ScheduleInfo /> : <RepairBookings />}</Box>
+			</Card>
 		</>
 	);
 };

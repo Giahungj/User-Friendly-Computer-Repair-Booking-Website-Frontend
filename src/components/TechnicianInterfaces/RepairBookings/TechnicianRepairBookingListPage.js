@@ -53,8 +53,8 @@ const TechnicianRepairBookingListPage = () => {
 
 	return (
 		<div className="container py-5">
-			<div className="card text-center p-4 mb-4">
-				<h4 className="mb-3">Danh sách đơn sửa chữa Kỹ Thuật Viên</h4>
+			<div className="card text-center shadow-sm py-4 mb-4">
+				<h4>Danh sách đơn sửa chữa Kỹ Thuật Viên</h4>
 			</div>
 
 			<div className="mb-3">
@@ -64,7 +64,7 @@ const TechnicianRepairBookingListPage = () => {
 				/>
 			</div>
 
-			<div className="row">
+			<div className="row g-2">
 				<div className={selectedBooking !== null ? "col-8" : "col-12"}>
 					{bookings.length > 0 ? (
 						<div className="row row-cols-1 row-cols-2 g-2">

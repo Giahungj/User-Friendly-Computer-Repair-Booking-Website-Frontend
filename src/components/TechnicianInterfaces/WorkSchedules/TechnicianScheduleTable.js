@@ -1,42 +1,51 @@
-// TechnicianScheduleTable.js
-const TechnicianScheduleTable = ({ schedules, onSelect }) => {
-	const formatShift = (shift) => (shift === "1" ? "Sáng" : shift === "2" ? "Chiều" : shift);
-	const shiftClass = (shift) => (shift === "1" ? "text-warning fw-bold" : shift === "2" ? "text-primary fw-bold" : "");
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from '@mui/material';
 
-	return (
-		<div className="card p-3">
-			<div className="table-responsive">
-				{!schedules.length ? (
-					<p className="text-center my-3 text-muted">Không có lịch làm việc</p>
-				) : (
-					<table className="table table-striped table-bordered">
-						<thead className="table-dark">
-							<tr>
-								<th>Ngày</th>
-								<th>Ca</th>
-								<th>Trạng thái</th>
-								<th>Cửa hàng</th>
-							</tr>
-						</thead>
-						<tbody>
-							{schedules.map((s, idx) => (
-								<tr key={idx} style={{ cursor: "pointer" }} onClick={() => onSelect?.(s)}>
-									<td>{new Date(s.work_date).toLocaleDateString("vi-VN")}</td>
-									<td className={shiftClass(s.shift)}>{formatShift(s.shift)}</td>
-									<td>
-										{s.current_number >= s.max_number
-											? "Đã đầy"
-											: `Còn ${s.current_number}/${s.max_number} slot`}
-									</td>
-									<td>{s.Technician.Store.name}</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				)}
-			</div>
-		</div>
-	);
+const TechnicianScheduleTable = ({ schedules, onSelect }) => {
+    const formatShift = (shift) => (shift === "1" ? "Sáng" : shift === "2" ? "Chiều" : shift);
+    const shiftStyle = (shift) => ({
+        fontWeight: 'bold',
+        color: shift === "1" ? '#ffca28' : shift === "2" ? '#1976d2' : 'inherit'
+    });
+
+    return (
+        <div className="card p-3 shadow-sm">
+            {schedules.length === 0 ? (
+                <Typography variant="body1" color="text.secondary" align="center" sx={{ my: 3 }}>
+                    Không có lịch làm việc
+                </Typography>
+            ) : (
+                <Table sx={{ minWidth: 650 }} aria-label="technician schedule table">
+                    <TableHead>
+                        <TableRow sx={{ backgroundColor: '#1e1e1e' }}>
+                            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Ngày</TableCell>
+                            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Ca</TableCell>
+                            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Trạng thái</TableCell>
+                            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Cửa hàng</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {schedules.map((s, idx) => (
+                            <TableRow
+                                key={idx}
+                                hover
+                                onClick={() => onSelect?.(s)}
+                                sx={{ cursor: 'pointer' }}
+                            >
+                                <TableCell>{new Date(s.work_date).toLocaleDateString("vi-VN")}</TableCell>
+                                <TableCell sx={shiftStyle(s.shift)}>{formatShift(s.shift)}</TableCell>
+                                <TableCell>
+                                    {s.current_number >= s.max_number
+                                        ? "Đã đầy"
+                                        : `Còn ${s.current_number}/${s.max_number} slot`}
+                                </TableCell>
+                                <TableCell>{s.Technician.Store.name}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            )}
+        </div>
+    );
 };
 
 export default TechnicianScheduleTable;

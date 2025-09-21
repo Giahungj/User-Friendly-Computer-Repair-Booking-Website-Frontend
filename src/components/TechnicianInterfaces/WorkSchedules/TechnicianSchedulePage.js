@@ -58,8 +58,8 @@ const TechnicianSchedulePage = () => {
 
 	return (
 		<div className="container py-5">
-			<div className="card text-center p-4 mb-4">
-				<h4 className="mb-3">Lịch làm việc Kỹ Thuật Viên</h4>
+			<div className="card text-center py-4 shadow-sm mb-4">
+				<h4>Lịch làm việc Kỹ Thuật Viên</h4>
 			</div>
 			<div className="row">
 				{/* Filter cố định bên trái */}
@@ -78,7 +78,6 @@ const TechnicianSchedulePage = () => {
 						schedules={filteredSchedules} 
 						onSelect={(s) => fetchScheduleDetail(s.work_schedule_id)} 
 					/>
-					<hr className="my-4" />
 					{selectedSchedule?.work_schedule_id && (
 						<TechnicianScheduleDetail 
 							schedule={selectedSchedule} 

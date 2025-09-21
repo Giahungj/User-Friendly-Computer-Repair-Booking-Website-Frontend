@@ -13,13 +13,14 @@ const TechnicianRepairBookingFilter = ({ filter, onFilter }) => {
 	const handleChange = (newFilter) => onFilter(newFilter);
 
 	return (
-		<div className="card p-3">
+		<div className="card p-3 shadow-sm">
 			<div className="row g-2">
 				<div className="col">
 					<TextField
 						type="date"
+						label="Từ ngày"
 						fullWidth
-						size="small"
+						size="large"
 						value={startDate}
 						onChange={e => {
 							const val = e.target.value;
@@ -32,8 +33,9 @@ const TechnicianRepairBookingFilter = ({ filter, onFilter }) => {
 				<div className="col">
 					<TextField
 						type="date"
+						label="Đến ngày"
 						fullWidth
-						size="small"
+						size="large"
 						value={endDate}
 						onChange={e => {
 							const val = e.target.value;

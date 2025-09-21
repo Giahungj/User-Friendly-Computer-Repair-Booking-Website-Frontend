@@ -29,8 +29,8 @@ const TechnicianReviewsPage = () => {
 
 	return (
 		<div className="container py-5">
-			<div className="card text-center p-4 mb-4">
-				<h4 className="mb-0">Đánh giá Kỹ Thuật Viên</h4>
+			<div className="card text-center py-4 mb-4 shadow-sm">
+				<h4>Đánh giá Kỹ Thuật Viên</h4>
 			</div>
 
 			{ratings.length === 0 ? (
