@@ -21,6 +21,13 @@ const StatChart = ({ dataLineChart }) => {
         borderWidth: 1,
       },
       {
+        label: 'Chưa duyệt',
+        data: isValidData ? dataLineChart.map(item => Number(item.pending) || 0) : [],
+        backgroundColor: '#4CAF50',
+        borderColor: '#388E3C',
+        borderWidth: 1,
+      },
+      {
         label: 'Bị hủy',
         data: isValidData ? dataLineChart.map(item => Number(item.cancelled) || 0) : [],
         backgroundColor: '#F44336',
@@ -29,7 +36,7 @@ const StatChart = ({ dataLineChart }) => {
       },
       {
         label: 'Đang xử lý',
-        data: isValidData ? dataLineChart.map(item => Number(item.pending) || 0) : [],
+        data: isValidData ? dataLineChart.map(item => Number(item.completed) || 0) : [],
         backgroundColor: '#FF9800',
         borderColor: '#F57C00',
         borderWidth: 1,

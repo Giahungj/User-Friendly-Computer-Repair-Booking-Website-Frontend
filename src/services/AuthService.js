@@ -99,7 +99,7 @@ export const verifyOTP = async ({ emailOrPhone, otp }) => {
 };
 
 // ---------------------------------------------------------
-export const changePassword = async ({ email, currentPassword,newPassword }) => {
+export const changePassword = async ({ email, currentPassword, newPassword }) => {
     try {
         const response = await axios.post("/api/check-password", { email, currentPassword, newPassword });
         return response;

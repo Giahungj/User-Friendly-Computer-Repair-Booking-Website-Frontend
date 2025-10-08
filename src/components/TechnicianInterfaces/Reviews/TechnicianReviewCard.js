@@ -1,4 +1,5 @@
 import { Star, StarHalf, StarOutline } from "@mui/icons-material";
+import { Avatar } from "@mui/material";
 
 const renderRating = (rating) => {
 	const stars = [];
@@ -13,24 +14,26 @@ const renderRating = (rating) => {
 const TechnicianReviewCard = ({ review }) => {
 	const customer = review.Customer?.User || {};
 	const customerName = customer.name || "Khách vãng lai";
-	const avatar = customer.avatar ? `http://localhost:8080/images${customer.avatar}` : "/default-avatar.png";
+	const avatar = customer.avatar ? `http://localhost:8080/images${customer.avatar}` : "http://localhost:8080/images/uploads/default-avatar.png";
 
 	return (
-		<div className="card p-3 w-100 h-100 shadow-sm rounded-3">
-			<div className="d-flex justify-content-between align-items-center mb-2">
-				<div className="d-flex align-items-center">
-					<img 
-						src={avatar} 
-						alt={customerName} 
-						className="rounded-circle me-2" 
-						style={{ width: "40px", height: "40px", objectFit: "cover" }}
-					/>
-					<h6 className="mb-0">{customerName}</h6>
+		<div className="card w-100 h-100 shadow-sm">
+			<div className="card-body">
+				<div className="d-flex justify-content-between align-items-center mb-2">
+					<div className="d-flex align-items-center">
+						<Avatar
+							src={avatar}
+							alt={customerName}
+							sx={{ width: 40, height: 40, mr: 2 }}
+						/>
+						<h6 className="mb-0">{customerName}</h6>
+						<h6 className="mb-0">{}</h6>
+					</div>
+					<div>{renderRating(review.rating)}</div>
 				</div>
-				<div>{renderRating(review.rating)}</div>
+				<p className="mb-1"><strong>Bình luận:</strong> {review.comment || "Không có bình luận"}</p>
+				<p className="mb-0 text-muted"><small>{new Date(review.createdAt).toLocaleDateString("vi-VN")}</small></p>
 			</div>
-			<p className="mb-1"><strong>Bình luận:</strong> {review.comment || "Không có bình luận"}</p>
-			<p className="mb-0 text-muted"><small>{new Date(review.createdAt).toLocaleDateString("vi-VN")}</small></p>
 		</div>
 	);
 };

@@ -1,7 +1,7 @@
 import axios from "../setUp/axios";
 
 // ---------------------------------------------------------
-export const fetchUserProfile = async (email) => {
+export const fetchUserProfileData = async (email) => {
     try {
         const response = await axios.get(`/api/user/read/${email}`);
         return response;

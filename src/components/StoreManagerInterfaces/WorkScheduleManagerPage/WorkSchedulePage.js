@@ -32,7 +32,7 @@ function WorkSchedulePage() {
 
     return (
         <div className="container py-5">
-            <div className="card border-0 shadow-sm rounded mb-3">
+            <div className="card border-0 shadow-sm mb-3 p-3">
                 <div className="card-body text-center">
                     <p className="lead fs-3 m-0">Quản lý Lịch làm việc</p>
                 </div>
@@ -40,13 +40,13 @@ function WorkSchedulePage() {
 
             <div className="row g-4">
                 <div className="col-lg-8">
-                    <div className="card shadow-sm rounded-3 mb-3">
+                    <div className="card shadow-sm mb-3">
                         <div className="card-header lead">Danh sách lịch làm việc</div>
                         <div className="card-body">
                             <WorkScheduleList schedules={workSchedules} />
                         </div>
                     </div>
-                    <div className="card shadow-sm rounded-3">
+                    <div className="card shadow-sm">
                         <div className="card-header lead">Lịch theo kỹ thuật viên</div>
                         <div className="card-body">
                             <TechnicianSchedule schedules={workSchedules} />
@@ -55,7 +55,7 @@ function WorkSchedulePage() {
                 </div>
 
                 <div className="col-lg-4">
-                    <div className="card shadow-sm rounded-3 sticky-top" style={{ top: "15px" }}>
+                    <div className="card shadow-sm sticky-top" style={{ top: "15px" }}>
 						<div className="card-header lead">Thêm lịch làm việc</div>
                         <div className="card-body">
                             <AddWorkScheduleForm

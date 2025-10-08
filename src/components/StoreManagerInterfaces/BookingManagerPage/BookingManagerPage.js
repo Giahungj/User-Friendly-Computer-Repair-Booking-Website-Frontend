@@ -8,7 +8,7 @@ import FilterPanel from "./FilterPanel";
 import StatisticsCard from "./StatisticsCard";
 import BookingTable from "./BookingTable";
 import BookingDetailModal from "./BookingDetailModal";
-import ReassignTechnicianModal from "./ReassignTechnicianModal";
+import { AddButton } from "../../commons/ActionButtons";
 
 function BookingManagementPage() {
 	const { auth } = useContext(AuthContext);
@@ -19,10 +19,9 @@ function BookingManagementPage() {
 	const [statistics, setStatistics] = useState({});
 	const [selectedBooking, setSelectedBooking] = useState(null);
 	const [openDetail, setOpenDetail] = useState(false);
-	const [openReassign, setOpenReassign] = useState(false);
 
 	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(true);
+	const [error, setError] = useState(null);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -46,7 +45,7 @@ function BookingManagementPage() {
 				setStatistics(calcStatistics([]));
 				setError("Lỗi kết nối server");
 			} finally {
-				setLoading(true);
+				setLoading(false);
 			}
 		};
 		fetchData();
@@ -65,11 +64,6 @@ function BookingManagementPage() {
 	const handleOpenDetail = (booking) => {
 		setSelectedBooking(booking);
 		setOpenDetail(true);
-	};
-
-	const handleOpenReassign = (booking) => {
-		setSelectedBooking(booking);
-		setOpenReassign(true);
 	};
 
 	const handleFilter = ({ status, technician, customer, date }) => {
@@ -96,16 +90,20 @@ function BookingManagementPage() {
 		setStatistics(calcStatistics(filtered));
 	};
 
-	{loading && <LoadingAndError.Loading />}
-	{error && <LoadingAndError.Error />}
+	if (loading) return <LoadingAndError.Loading />;
+	if (error) return <LoadingAndError.Error message={error}  />;
 
 	return (
 		<div className="container py-5">
-			<div className="card border-0 shadow-sm rounded mb-3">
-                <div className="card-body text-center">
-                    <p className="lead fs-3 m-0">Quản lý Lịch làm việc</p>
-                </div>
-            </div>
+			<div className="card shadow-sm mb-4" style={{ color: "#415A77", background: "none" }}>
+				<div className="card-body text-center py-3 d-flex justify-content-between align-items-center gap-3">
+					<h4 className="mb-0">Quản lý Đơn đặt lịch </h4>
+					<div className="d-flex justify-content-between align-items-center gap-3" >
+						<AddButton style={{ fontSize: 40 }} />
+					</div>
+				</div>
+			</div>
+
 			<HeaderBar
 				onToday={() => handleFilter({ date: "2025-08-20" })}
 				onThisWeek={() => console.log("Filter this week (TODO)")}
@@ -121,20 +119,12 @@ function BookingManagementPage() {
 			<BookingTable
 				bookings={bookings}
 				onViewDetail={handleOpenDetail}
-				onReassign={handleOpenReassign}
 			/>
 
 			{openDetail && (
 				<BookingDetailModal
 					booking={selectedBooking}
 					onClose={() => setOpenDetail(false)}
-				/>
-			)}
-
-			{openReassign && (
-				<ReassignTechnicianModal
-					booking={selectedBooking}
-					onClose={() => setOpenReassign(false)}
 				/>
 			)}
 		</div>

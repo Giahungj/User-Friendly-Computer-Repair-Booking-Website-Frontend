@@ -1,10 +1,12 @@
 import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
 import { signInByEmailForStoreManager, signInByPhoneForStoreManager } from '../../services/AuthService';
 import { Button, TextField, InputAdornment } from '@mui/material';
 
 function TLoginForm() {
+    const navigate = useNavigate();
     const { loginContext } = useContext(AuthContext);
 
     const [loginMethod, setLoginMethod] = useState('phone');
@@ -55,6 +57,7 @@ function TLoginForm() {
                 user
             });
             toast.success(res.EM || 'Đăng nhập thành công!');
+            navigate('/cua-hang-truong/ky-thuat-vien/danh-sach');
         } catch (err) {
             console.error('Lỗi đăng nhập:', err);
             toast.error('Lỗi kết nối máy chủ');

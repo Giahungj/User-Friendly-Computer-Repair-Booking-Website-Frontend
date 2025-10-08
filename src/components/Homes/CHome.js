@@ -8,7 +8,7 @@ const CHome = () => {
             <header>
                 <CustomerHeader />
             </header>
-            <main className="content bg-light">
+            <main className="content">
                 <Outlet />
             </main>
             <footer className="footer bg-light text-center py-4">

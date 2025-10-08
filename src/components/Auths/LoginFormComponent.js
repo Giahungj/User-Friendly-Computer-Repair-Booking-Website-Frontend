@@ -70,7 +70,7 @@ function LoginForm() {
 			<form onSubmit={handleSubmit} className="p-3">
 				<div className="mb-3">
 					<p className="text-start text-muted">
-						Dùng số điện thoại, email, hoặc phương thức khác để đăng nhập hoặc đăng kí.
+						Dùng số điện thoại, email, hoặc phương thức khác để đăng nhập hoặc đăng ký.
 					</p>
 					<div className="d-flex gap-3">
 						<label className="text-dark">

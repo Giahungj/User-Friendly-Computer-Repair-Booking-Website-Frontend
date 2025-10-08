@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchUserProfile } from "../../services/AccountService";
-import Avatar from '@mui/material/Avatar';
+import { fetchUserProfileData } from "../../services/AccountService";
+import { Avatar, Button } from "@mui/material";
+import { Edit, Lock } from "@mui/icons-material";
 
 const UserProfile = () => {
     const navigate = useNavigate();
     const { email } = useParams();
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+
     useEffect(() => {
         const getUserProfile = async () => {
             try {
                 setLoading(true);
-                const response = await fetchUserProfile(email);
+                const response = await fetchUserProfileData(email);
                 if (response?.EC === 0) {
                     setUser(response.DT);
                 } else {
@@ -32,60 +33,88 @@ const UserProfile = () => {
     if (loading) return <p>Đang tải dữ liệu...</p>;
     if (!user) return <p>Không tìm thấy thông tin người dùng.</p>;
 
+
+    const renderStoreManagerInfo = () => {
+        if (!user.StoreManager) return null;
+        return (
+            <div className="mt-3">
+                <p><strong>Cửa hàng phụ trách:</strong> {user.StoreManager.store_name}</p>
+                <p><strong>Kinh nghiệm:</strong> {user.StoreManager.experience || 'Chưa cập nhật'}</p>
+            </div>
+        );
+    };
+
+    const renderTechnicianInfo = () => {
+        if (!user.Technician) return null;
+        return (
+            <div className="mt-3">
+                <p><strong>Chuyên môn:</strong> {user.Technician.specialization}</p>
+                <p><strong>Năm kinh nghiệm:</strong> {user.Technician.experience}</p>
+                <p><strong>Lịch làm việc:</strong> {user.Technician.schedule || 'Chưa cập nhật'}</p>
+            </div>
+        );
+    };
+
+    const renderCustomerInfo = () => {
+        if (!user.Customer) return null;
+        return (
+            <div className="mt-3">
+                <p><strong>Địa chỉ:</strong> {user.Customer.address}</p>
+                <p><strong>Điểm thưởng:</strong> {user.Customer.points || 0}</p>
+            </div>
+        );
+    };
+
+    const renderRoleInfo = () => {
+        if (user.role === 1) return renderStoreManagerInfo();
+        if (user.role === 2) return renderTechnicianInfo();
+        if (user.role === 3) return renderCustomerInfo();
+        return null;
+    };
+
     return (
         <div className="container py-5">
-            
-            <div className="row">
-                {/* Cột chính (8/12) cho thông tin chi tiết */}
-                <div className="col-md-8 border-end">
-                    <div className="p-3">
-                        {/* Thông tin cơ bản */}
-                        <h6 className="fw-semibold text-muted mb-3">Thông tin cơ bản</h6>
+            <div className="row g-3">
+                <div className="col-8">
+                    <div className="card shadow-sm p-3 h-100">
                         <p className="mb-2"><strong>Email:</strong> {user.email}</p>
                         <p className="mb-2"><strong>Số điện thoại:</strong> {user.phone || 'Chưa cập nhật'}</p>
-                        <p className="mb-2"><strong>Địa chỉ:</strong> {user.address || 'Chưa cập nhật'}</p>
-                        <p className="mb-2"><strong>Giới tính:</strong> {user.sex === 1 ? 'Nam' : 'Nữ'}</p>
-                        <p className="mb-2"><strong>Loại người dùng:</strong> {user.userType === 'patient' ? 'Người dùng thông thường' : 'Người dùng bác sĩ' }</p>
-                        <hr></hr>
-                        {/* Thông tin khác */}
-                        <h6 className="fw-semibold text-muted mt-4 mb-3">Thông tin khác</h6>
-                        <p className="mb-2"><strong>Tham gia vào:</strong> {new Date(user.createdAt).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })}</p>
-                        <p className="mb-2"><strong>Ngày cập nhật gần nhất:</strong> {new Date(user.updatedAt).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })}</p>
+                        <p className="mb-2"><strong>Loại người dùng:</strong> {
+                            user.role === 1 ? 'Quản lý cửa hàng' :
+                            user.role === 2 ? 'Kỹ thuật viên' :
+                            user.role === 3 ? 'Khách hàng' : 'Không xác định'
+                        }</p>
+                        {renderRoleInfo()}
                     </div>
                 </div>
                 {/* Cột phụ (4/12) cho ảnh đại diện và nút chỉnh sửa */}
-                <div className="col-md-4 text-center">
-                    <Avatar
-                        alt={user.name}
-                        src={user.avatar ? `http://localhost:8080/images/uploads/${user.avatar}` : '/default-avatar.jpg'}
-                        sx={{ width: 150, height: 150, margin: '0 auto 16px', fontSize: 40 }}
-                    />
-                    <h5 className="fw-bold text-dark mb-3">{user.name}</h5>
-                    <div className="d-grid gap-3">
-                        <button
-                            className="btn-white border border-dark rounded py-2"
-                            onClick={() => navigate(`/profile/update-profile`)}
-                        >
-                            Thay đổi thông tin cá nhân
-                        </button>
-                        <button
-                            className="btn-white border border-dark rounded py-2"
-                            onClick={() => navigate(`/profile/update-email`)}
-                        >
-                            Cập nhật email
-                        </button>
-                        <button
-                            className="btn-white border border-dark rounded py-2"
-                            onClick={() => navigate(`/profile/update-phone`)}
-                        >
-                            Cập nhật số điện thoại
-                        </button>
-                        <button
-                            className="btn-white border border-dark rounded py-2"
-                            onClick={() => navigate(`/profile/change-password`)}
-                        >
-                            Đổi mật khẩu
-                        </button>
+                <div className="col-4">
+                    <div className="card shadow-sm p-3 text-center h-100">
+                        <Avatar
+                            alt={user.name}
+                            src={user.avatar ? `http://localhost:8080/images/uploads/${user.avatar}` : '/default-avatar.jpg'}
+                            sx={{ width: 150, height: 150, margin: '0 auto 16px', fontSize: 40 }}
+                        />
+                        <h5 className="fw-bold text-dark mb-3">{user.name}</h5>
+                        <div className="d-grid gap-1">
+                            <Button
+                                variant="outlined"
+                                className="rounded py-2"
+                                startIcon={<Edit />}
+                                onClick={() => navigate(`/profile/update-profile`)}
+                            >
+                                Thay đổi thông tin cá nhân
+                            </Button>
+
+                            <Button
+                                variant="outlined"
+                                className="rounded py-2"
+                                startIcon={<Lock />}
+                                // onClick={() => navigate(`/profile/change-password`)}
+                            >
+                                Đổi mật khẩu
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </div>

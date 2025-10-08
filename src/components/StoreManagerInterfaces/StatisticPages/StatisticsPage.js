@@ -1,5 +1,5 @@
 // src/components/Statistics/StatisticsPage.jsx
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 import { toast } from 'react-toastify';
 import { Button, Menu, MenuItem } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -48,7 +48,7 @@ const fetchStatisticsData = async (storeManagerId, filters, setData, setDataLine
 		const totalObj = (summaryRes.total && summaryRes.total.DT) || summaryRes.total || {};
 		const totalVal = Number(totalObj.total ?? 0);
 
-		const counts = { pending: 0, completed: 0, cancelled: 0 };
+		const counts = { pending: 0, inProgress: 0, completed: 0, cancelled: 0 };
 		if (Array.isArray(statusArr)) {
 			statusArr.forEach((item) => {
 				if (!item || !item.status) return;
@@ -58,7 +58,8 @@ const fetchStatisticsData = async (storeManagerId, filters, setData, setDataLine
 		}
 
 		setSummary({
-			total: totalVal || counts.pending + counts.completed + counts.cancelled,
+			total: totalVal || counts.inProgress + counts.pending + counts.completed + counts.cancelled,
+			inProgress: counts.inProgress || 0,
 			completed: counts.completed || 0,
 			cancelled: counts.cancelled || 0,
 			pending: counts.pending || 0,
@@ -81,7 +82,7 @@ const StatisticsPage = () => {
 		periodType: 'day',
 		technicianId: '',
 	});
-	const [summary, setSummary] = useState({ total: 0, completed: 0, cancelled: 0, pending: 0 });
+	const [summary, setSummary] = useState({ total: 0, inProgress: 0, completed: 0, cancelled: 0, pending: 0 });
 	const [data, setData] = useState([]);
 	const [dataLineChart, setDataLineChart] = useState([]);
 
@@ -111,7 +112,6 @@ const StatisticsPage = () => {
 
 	const handleExportExcel = async () => {
 		try {
-			console.log(data);
 			await exportStatistics.exportStatisticsToExcel(summary, data);
 			toast.success("Xuất báo cáo Excel thành công!");
 		} catch (err) {

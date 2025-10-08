@@ -37,7 +37,7 @@ const StoreManagerHeader = () => {
 		<>
 			<Button onClick={(e) => setAnchorElNoti(e.currentTarget)}>
 				<Badge badgeContent={unreadCount > 9 ? '9+' : unreadCount} color="error">
-					<NotificationsNoneOutlined sx={{ color: '#3f51b5' }} />
+					<NotificationsNoneOutlined sx={{ color: '#778DA9' }} />
 				</Badge>
 			</Button>
 
@@ -130,53 +130,69 @@ const StoreManagerHeader = () => {
 
 	return (
 		<Sheet
-			variant="solid"
-			invertedColors
-			sx={{ display: 'flex', alignItems: 'center', py: 0, px: 4, background: '#e8eaf6', borderBottom: '1px solid #ccc' }}
+		variant="solid"
+		invertedColors
+		sx={{
+			display: "flex",
+			alignItems: "center",
+			py: 0,
+			px: 4,
+			background: "#1B263B", // dark
+			borderBottom: "2px solid #415A77", // primary
+			color: "#E0E1DD", // bg
+		}}
+	>
+		<h1
+			style={{
+				color: "#E0E1DD",
+				fontWeight: "700",
+				fontSize: "2rem",
+				letterSpacing: "1px",
+			}}
 		>
-			<h1 
-				style={{ 
-					color: '#3f51b5', 
-					fontWeight: '700', 
-					fontSize: '2rem', 
-					letterSpacing: '1px', 
-				}}
-			>
-				TechFix Manager
-			</h1>
-			<Box sx={{ flexGrow: 1, display: 'flex', gap: 0, px: 2 }}>
-				{[
-					{ label: 'Trang chủ', path: '/cua-hang-truong' },
-					{ label: 'Kỹ thuật viên', path: '/cua-hang-truong/ky-thuat-vien/danh-sach' },
-					{ label: 'Đơn hàng', path: '/cua-hang-truong/don-dat-lich/danh-sach' },
-					{ label: 'Lịch làm việc', path: '/cua-hang-truong/lich-lam-viec/danh-sach' },
-					{ label: 'Báo cáo', path: '/cua-hang-truong/bao-cao' }
-				].map((item, i) => (
-					<NavLink key={i} to={item.path}>
-						{({ isActive }) => (
-							<Button
-								variant="text"
-								size="md"
-								sx={{
-									color: '#333',
-									textTransform: 'none',
-									...(isActive && {
-										fontWeight: 'bold',
-										color: 'white',
-										backgroundColor: '#607d8b',
-									}),
-								}}
-							>
-								{item.label}
-							</Button>
-						)}
-					</NavLink>
-				))}
-			</Box>
-			<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-				{auth?.isAuthenticated && renderUserMenu()}
-			</Box>
-		</Sheet>
+			TechFix Manager
+		</h1>
+
+		<Box sx={{ flexGrow: 1, display: "flex", gap: 0, px: 2 }}>
+			{[
+				{ label: "Trang chủ", path: "/cua-hang-truong", end: true },
+				{ label: "Kỹ thuật viên", path: "/cua-hang-truong/ky-thuat-vien/danh-sach" },
+				{ label: "Đơn hàng", path: "/cua-hang-truong/don-dat-lich/danh-sach" },
+				{ label: "Lịch làm việc", path: "/cua-hang-truong/lich-lam-viec/danh-sach" },
+				{ label: "Báo cáo", path: "/cua-hang-truong/bao-cao" },
+			].map((item, i) => (
+				<NavLink key={i} to={item.path} end={item.end}>
+					{({ isActive }) => (
+						<Button
+							variant="text"
+							size="md"
+							sx={{
+								color: isActive ? "#E0E1DD" : "#778DA9", // active sáng, inactive accent
+								textTransform: "none",
+								borderBottom: isActive
+									? "3px solid #415A77"
+									: "3px solid transparent",
+								borderRadius: 0,
+								fontWeight: isActive ? "bold" : 400,
+								backgroundColor: isActive ? "#0D1B2A" : "transparent",
+								"&:hover": {
+									backgroundColor: "#415A77",
+									color: "#E0E1DD",
+								},
+							}}
+						>
+							{item.label}
+						</Button>
+					)}
+				</NavLink>
+			))}
+		</Box>
+
+		<Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+			{auth?.isAuthenticated && renderUserMenu()}
+		</Box>
+	</Sheet>
+
 	);
 };
 

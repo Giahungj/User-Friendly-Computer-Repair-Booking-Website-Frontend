@@ -8,7 +8,7 @@ const SHome = () => {
             <header>
                 <StoreManagerHeader />
             </header>
-            <main className="content bg-light">
+            <main className="content" style={{ backgroundColor: '#E0E1DD' }}>
                 <Outlet />
             </main>
             <footer className="footer bg-light text-center py-4">

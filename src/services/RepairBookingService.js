@@ -107,6 +107,17 @@ const approveRepairBooking = async (repair_booking_id) => {
     }
 };
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+const completedRepairBooking = async (technicianId, bookingId) => {
+    try {
+        const response = await axios.post(`/api/don-dat-lich/xac-nhan-hoan-thanh-don`, { technicianId, bookingId });
+        console.log(response);
+        return response;
+    } catch (error) {
+        console.error(`Duyệt đơn thất bại:`, error.message);
+        return { EC: -1, EM: error.message || "Lỗi không xác định", DT: [] };
+    }
+};
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 const rejectRepairBooking = async (repair_booking_id) => {
     try {
         const response = await axios.put(`/api/cua-hang-truong/don-dat-lich/tu-choi-don`, { repair_booking_id });
@@ -119,7 +130,7 @@ const rejectRepairBooking = async (repair_booking_id) => {
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 const getData1 = async ({ technicianId, filter }) => {
 	try {
-		const response = await axios.get(`/api/3/laydanhsachdondatlich`, {params: filter});
+		const response = await axios.get(`/api/${technicianId}/laydanhsachdondatlich`, {params: filter});
 		return response;
 	} catch (error) {
 		console.error("laydanhsachdondatlich:", error.message);
@@ -137,6 +148,20 @@ const getData2 = async (bookingId) => {
 	}
 };
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+const reassignTechnician = async ({ bookingId, workScheduleId, technicianId }) => {
+	try {
+		const response = await axios.put(`/api/cua-hang-truong/don-dat-lich/doi-nguoi-sua-chua`, {
+			bookingId,
+			workScheduleId,
+			technicianId
+		});
+		return response;
+	} catch (error) {
+		console.error("Đổi kỹ thuật viên thất bại:", error.message);
+		return { EC: -1, EM: error.message || "Lỗi không xác định", DT: null };
+	}
+};
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 export {
     getDataForCreateBooking,
     createRepairBooking,
@@ -147,8 +172,11 @@ export {
 
     getRepairBookingsForStoreManager,
     getRepairBookingDetailForStoreManager,
-    approveRepairBooking, 
+    approveRepairBooking,
+    completedRepairBooking,
     rejectRepairBooking,
 
-    getData1, getData2
+    getData1, getData2,
+
+    reassignTechnician
 }

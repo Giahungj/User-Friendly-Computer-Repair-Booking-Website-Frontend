@@ -3,7 +3,6 @@ import axios from "../setUp/axios";
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 const getAppointmentsSummaryByManager = async (storeManagerId, filters) => {
 	try {
-		console.log(filters)
 		const response = await axios.get(
 			`/api/cua-hang-truong/${storeManagerId}/thong-ke/so-lieu/tong-quat`,
 			{
@@ -14,7 +13,6 @@ const getAppointmentsSummaryByManager = async (storeManagerId, filters) => {
 				}
 			}
 		);
-		console.log(response)
 		return response;
 	} catch (error) {
 		console.error("❌ [DEBUG] Lỗi khi gọi API:", error);

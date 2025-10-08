@@ -1,5 +1,6 @@
+import { useEffect } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import { toast } from 'react-toastify';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useState } from 'react';
@@ -16,31 +17,30 @@ function BookingCreateStep2() {
     const bookingData = location.state;
 
     // Khởi tạo state từ bookingData
-    const issueDescription = useState(bookingData?.issueDescription || '');
-    const deviceType = useState(bookingData?.deviceType || '');
-    const model = useState(bookingData?.model || '');
-    const brand = useState(bookingData?.brand || '');
-    const issueImage = useState(bookingData?.issueImage || null);
+    const [issueDescription, setIssueDescription] = useState(bookingData?.issueDescription || '');
+    const [deviceType, setDeviceType] = useState(bookingData?.deviceType || '');
+    const [model, setModel] = useState(bookingData?.model || '');
+    const [brand, setBrand] = useState(bookingData?.brand || '');
+    const [issueImage, setIssueImage] = useState(bookingData?.issueImage || null);
 
-    const workSchedule = useState(bookingData?.workSchedule || null);
-    const customer = useState(bookingData?.customer || null);
+    const [workSchedule, setWorkSchedule] = useState(bookingData?.workSchedule || null);
+    const [customer, setCustomer] = useState(bookingData?.customer || null)
     const [loading, setLoading] = useState(!bookingData);
     const [error, setError] = useState(false);
 
-    if (!bookingData) {
-        navigate('/dat-lich/tao-buoc-1');
-        return;
-    }
+    useEffect(() => {
+        if (!bookingData) {
+            navigate('/dat-lich/tao-buoc-1');
+        }
+    }, [bookingData, navigate]);
 
-    const shiftLabel = {
-        1: 'Ca sáng (7:00 - 11:00)',
-        2: 'Ca chiều (13:00 - 17:00)'
-    }[workSchedule.shift] || workSchedule.shift;
+    const shiftLabel = workSchedule
+        ? ({ 1: 'Ca sáng (7:00 - 11:00)', 2: 'Ca chiều (13:00 - 17:00)' }[workSchedule.shift] || workSchedule.shift)
+        : '';
 
     const formattedDate = workSchedule.work_date
         ? new Date(workSchedule.work_date).toLocaleDateString('vi-VN')
         : '';
-
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -65,25 +65,24 @@ function BookingCreateStep2() {
             bookingDate: new Date().toISOString().split('T')[0],   // yyyy-mm-dd
             bookingTime: new Date().toTimeString().split(' ')[0],  // HH:mm:ss
         };
-
         try {
             const res = await createRepairBooking(bookingDataToSubmit);
-            setTimeout(() => {
-                if (res.EC === 0) {
-                    toast.success("Tạo đơn thành công!");
-                    navigate(`/dat-lich/${res.DT}/thong-tin/chi-tiet`);
-                } else {
-                    toast.error(res.EM || "Tạo đơn thất bại. Vui lòng thử lại.");
-                }setLoading(false);
-            }, 1000);
+            if (res.EC === 0) {
+                toast.success("Tạo đơn thành công!");
+                navigate(`/dat-lich/${res.DT}/thong-tin/chi-tiet`);
+            } else {
+                toast.error(res.EM || "Tạo đơn thất bại. Vui lòng thử lại.");
+            }
         } catch (error) {
             toast.error("Đã xảy ra lỗi. Vui lòng thử lại sau.");
-        } 
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
         <div className="container py-5 fs-7">
-            <div className="card shadow-sm border-0 p-3 mb-4" style={{ maxWidth: "90em", margin: "0 auto" }}>
+            <div className="card shadow-sm p-3 mb-4" style={{ maxWidth: "90em", margin: "0 auto" }}>
                 <div className="card-header border-0 rounded text-white text-center" style={{ backgroundColor: "#2196f3" }}>
                     <h4 className="lead mt-2 mb-2">Đặt Lịch Sửa Chữa</h4>
                     <h3 className="mb-2">Xác nhận thông tin thiết bị</h3>
@@ -91,18 +90,32 @@ function BookingCreateStep2() {
                 <form className="p-4" onSubmit={handleSubmit}>
                     <div className="row">
                         <div className="col-md-6">
-                            <div className="mb-4">
-                                <label className="form-label fw-bold">Loại thiết bị</label>
-                                <input type="text" className="form-control" value={deviceType} disabled />
-                            </div>
-                            <div className="mb-4">
-                                <label className="form-label fw-bold">Hãng</label>
-                                <input type="text" className="form-control" value={brand} disabled />
-                            </div>
-                            <div className="mb-4">
-                                <label className="form-label fw-bold">Model</label>
-                                <input type="text" className="form-control" value={model} disabled />
-                            </div>
+                            <TextField
+                                label="Loại thiết bị"
+                                variant="outlined"
+                                fullWidth
+                                margin="normal"
+                                value={deviceType}
+                                disabled
+                            />
+
+                            <TextField
+                                label="Hãng"
+                                variant="outlined"
+                                fullWidth
+                                margin="normal"
+                                value={brand}
+                                disabled
+                            />
+
+                            <TextField
+                                label="Model"
+                                variant="outlined"
+                                fullWidth
+                                margin="normal"
+                                value={model}
+                                disabled
+                            />
                         </div>
                         <div className="col-md-6">
                             <div className="mb-4">
@@ -121,7 +134,7 @@ function BookingCreateStep2() {
                                         }}
                                     />
                                         <div className="text-center text-truncate small text-muted">
-                                            {issueImage.name}
+                                            {issueImage instanceof File ? issueImage.name : "Ảnh từ hệ thống"}
                                         </div>
                                     </div>
                                 ) : (
@@ -273,7 +286,6 @@ function BookingCreateStep2() {
                             type="submit"
                             className="rounded-pill"
                             variant="contained"
-                            onClick={handleSubmit}
                             sx={{ minWidth: "120px", backgroundColor: "#2196f3" }}
                             disabled={loading}
                         >

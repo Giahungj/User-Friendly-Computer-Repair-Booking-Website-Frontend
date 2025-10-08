@@ -45,9 +45,9 @@ const TechnicianReviewsPage = () => {
 				) : (
 				<div className="row g-3">
 					{ratings.map((review, idx) => (
-					<div className="col" key={idx}>
-						<TechnicianReviewCard review={review} />
-					</div>
+						<div className="col" key={idx}>
+							<TechnicianReviewCard review={review} />
+						</div>
 					))}
 				</div>
 				)}

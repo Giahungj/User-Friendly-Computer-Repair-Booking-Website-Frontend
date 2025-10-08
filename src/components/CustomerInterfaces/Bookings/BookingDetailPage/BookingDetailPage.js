@@ -108,10 +108,10 @@ function BookingDetailPage() {
 	return (
 		<>
 			<div className="container py-5">
-				<div className="card shadow-sm border-0 p-3 mb-3">
+				<div className="card shadow-sm p-3 mb-3">
 					{/* Header */}
 					<div
-						className="card-header border-0 rounded text-white text-center"
+						className="card-header border-0 mb-4 rounded text-white text-center"
 						style={{ backgroundColor: "#2196f3" }}
 					>
 						<h4 className="lead mt-2 mb-2">Thông tin lịch sửa chữa</h4>
@@ -124,12 +124,14 @@ function BookingDetailPage() {
 							className={`text-uppercase btn ${
 								booking?.status === "pending"
 									? "btn-warning"
+									: booking?.status === "in-progress"
+									? "btn-primary"
 									: booking?.status === "cancelled"
 									? "btn-danger"
 									: "btn-success"
 							}`}
 						>
-							{booking?.status === "pending" && (
+							{booking?.status === "pending" ||  booking?.status === "in-progress" && (
 								<span
 									className="spinner-border spinner-border-sm text-light me-2"
 									role="status"
@@ -137,9 +139,11 @@ function BookingDetailPage() {
 							)}
 							{booking?.status === "pending"
 								? "Đang chờ duyệt"
+								: booking?.status === "in-progress"
+								? "Kỹ thuật viên đã nhận đơn và trong quá trình sửa chữa cho bạn"
 								: booking?.status === "cancelled"
 								? "Đã hủy"
-								: "Đã duyệt"}
+								: "Đã hoàn thành"}
 						</span>
 
 						{booking?.status === "pending" && (

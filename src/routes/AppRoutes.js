@@ -9,6 +9,7 @@ import TechnicianHome from '../components/Homes/THome.js';
 // Pages
 import TrangChu from '../components/About/TrangChu';
 import About from '../components/About/About';
+import TestColorPage from '../components/commons/TestColorPage.js';
 import NotFound from '../components/NotFound/NotFound';
 
 // Auth/Profile
@@ -37,16 +38,15 @@ import TechnicianManagerPage from '../components/StoreManagerInterfaces/Technici
 import BookingManagerPage from '../components/StoreManagerInterfaces/BookingManagerPage/BookingManagerPage.js';
 import ManagerBookingDetailPage from '../components/StoreManagerInterfaces/BookingManagerPage/BookingDetailPage.js';
 import StatisticsPage from '../components/StoreManagerInterfaces/StatisticPages/StatisticsPage.js';
+import ReassignTechnicianPage from '../components/StoreManagerInterfaces/BookingManagerPage/ReassignTechnicianPage.js';
 
 // Technician Interface
 import TechnicianDashboardPage from '../components/TechnicianInterfaces/Dashboard/TechnicianDashboardPage.js';
 import TechnicianRepairBookingListPage from '../components/TechnicianInterfaces/RepairBookings/TechnicianRepairBookingListPage.js';
 import TechnicianSchedulePage from '../components/TechnicianInterfaces/WorkSchedules/TechnicianSchedulePage.js';
+import TechnicianScheduleDetailPage from '../components/TechnicianInterfaces/WorkSchedules/TechnicianScheduleDetailPage.js';
 import TechnicianProfilePage from '../components/TechnicianInterfaces/Profile/TechnicianProfilePage.js';
 import TechnicianReviewsPage from '../components/TechnicianInterfaces/Reviews/TechnicianReviewsPage.js';
-// import TechnicianManagerPage from '../components/StoreManagerInterfaces/TechnicianManagerPage/TechnicaianManagerPage.js';
-// import BookingManagerPage from '../components/StoreManagerInterfaces/BookingManagerPage/BookingManagerPage.js';
-// import ManagerBookingDetailPage from '../components/StoreManagerInterfaces/BookingManagerPage/BookingDetailPage.js';
 
 // Route Guards
 import PrivateRoutes from './PrivateRoutes';
@@ -90,6 +90,7 @@ const AppRoutes = () => (
                 <Route path="cua-hang-truong/ky-thuat-vien/danh-sach" element={<TechnicianManagerPage />} />
                 <Route path="cua-hang-truong/don-dat-lich/danh-sach" element={<BookingManagerPage />} />
                 <Route path="cua-hang-truong/don-dat-lich/:repair_booking_id/chi-tiet" element={<ManagerBookingDetailPage />} />
+                <Route path="cua-hang-truong/don-dat-lich/:repair_booking_id/doi-nguoi-sua-chua" element={<ReassignTechnicianPage />} />
                 <Route path="cua-hang-truong/lich-lam-viec/danh-sach" element={<WorkSchedulePage />} />
                 <Route path="cua-hang-truong/bao-cao" element={<StatisticsPage />} />
             </Route>
@@ -101,6 +102,7 @@ const AppRoutes = () => (
                 <Route path="dashboard" element={<TechnicianDashboardPage />} />
                 <Route path="don-dat-lich/danh-sach" element={<TechnicianRepairBookingListPage />} />
                 <Route path="lich-lam-viec" element={<TechnicianSchedulePage />} />
+                <Route path="lich-lam-viec/:work_schedule_id/chi-tiet" element={<TechnicianScheduleDetailPage />} />
                 <Route path="ho-so" element={<TechnicianProfilePage />} />
                 <Route path="danh-gia" element={<TechnicianReviewsPage />} />
                 <Route path="*" element={<NotFound />} />
@@ -111,6 +113,8 @@ const AppRoutes = () => (
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="verify-otp" element={<VerifyOTP />} />
         <Route path="reset-password" element={<ResetPassword />} />
+
+        <Route path="test" element={<TestColorPage />} />
     </Routes>
 );
 

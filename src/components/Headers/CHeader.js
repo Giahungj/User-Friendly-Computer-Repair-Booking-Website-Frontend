@@ -12,22 +12,28 @@ import {
 	EventNoteOutlined,
 	NotificationsNoneOutlined,
 	SettingsOutlined,
+	DashboardOutlined,
+	StorefrontOutlined,
 	HelpOutlineOutlined,
 	Logout
 } from '@mui/icons-material';
 
 const Header = () => {
 	const navigate = useNavigate();
-	const { auth, logoutContext, showLogin, setShowLogin, showInternalLogin, setShowInternalLogin } = useContext(AuthContext);
+	const { auth, logoutContext, showLogin, setShowLogin, showInternalLogin, setShowInternalLogin, notifications, setNotifications } = useContext(AuthContext);
 	const [anchorElNoti, setAnchorElNoti] = useState(null);
 	const [anchorElUser, setAnchorElUser] = useState(null);
 
-	const notifications = [
-		{ id: 1, message: 'Thiết bị của bạn đã được chẩn đoán xong.', isRead: false, action: '/bookings/history' },
-		{ id: 2, message: 'Lịch hẹn với kỹ thuật viên A đã được xác nhận.', isRead: true, action: '/bookings/upcoming' },
-		{ id: 3, message: 'Bạn có đánh giá chưa hoàn thành.', isRead: false, action: '/ratings/pending' }
-	];
+	// Badge số thông báo chưa đọc
 	const unreadCount = notifications.filter(n => !n.isRead).length;
+
+	// Khi click vào thông báo, có thể mark as read
+	const handleClickNotification = (noti) => {
+		setAnchorElNoti(null);
+		// mark notification as read
+		setNotifications(prev => prev.map(n => n.id === noti.id ? { ...n, isRead: true } : n));
+		navigate(noti.action);
+	};
 
 	const handleNavigate = (path) => {
 		window.location.href = path;
@@ -45,26 +51,23 @@ const Header = () => {
 			<Menu anchorEl={anchorElNoti} open={Boolean(anchorElNoti)} onClose={() => setAnchorElNoti(null)}>
                 {notifications.length > 0 ? notifications.map((noti) => (
                     <MenuItem
-                        key={noti.id}
-                        onClick={() => {
-                            setAnchorElNoti(null);
-                            navigate(noti.action);
-                        }}
-                        sx={{
-                            width: 320,
-                            whiteSpace: 'normal',
-                            alignItems: 'flex-start',
-                            py: 1.5,
-                            px: 2,
-                            gap: 1,
-                            backgroundColor: noti.isRead ? '#fff' : '#e3f2fd',
-                            borderLeft: noti.isRead ? '4px solid transparent' : '4px solid #2196f3',
-                        }}
-                    >
-                        <Box sx={{ fontSize: 14, color: '#333', fontWeight: noti.isRead ? 400 : 600 }}>
-                            {noti.message}
-                        </Box>
-                    </MenuItem>
+						key={noti.id}
+						onClick={() => handleClickNotification(noti)}
+						sx={{
+							width: 320,
+							whiteSpace: 'normal',
+							alignItems: 'flex-start',
+							py: 1.5,
+							px: 2,
+							gap: 1,
+							backgroundColor: noti.isRead ? '#fff' : '#e3f2fd',
+							borderLeft: noti.isRead ? '4px solid transparent' : '4px solid #2196f3',
+						}}
+					>
+						<Box sx={{ fontSize: 14, color: '#333', fontWeight: noti.isRead ? 400 : 600 }}>
+							{noti.message}
+						</Box>
+					</MenuItem>
                 )) : (
                     <MenuItem disabled sx={{ width: 320, justifyContent: 'center', color: '#888' }}>
                         Không có thông báo
@@ -72,13 +75,23 @@ const Header = () => {
                 )}
             </Menu>
 
-			<Button onClick={(e) => setAnchorElUser(e.currentTarget)}>
-				<Avatar
-					alt={auth?.user?.name || 'Người dùng'}
-					src={auth?.user?.avatar ? `http://localhost:8080/images/uploads/${auth.user.avatar}` : '/default-avatar.jpg'}
-					sx={{ width: 40, height: 40 }}
-				/>
-			</Button>
+			<div className="d-flex align-items-center gap-2">
+				<span className='text-dark'>
+					{
+						auth?.user?.role === "store_manager" ? "Quản lý" :
+						auth?.user?.role === "technician" ? "Kỹ thuật viên" :
+						auth?.user?.role === "customer" ? "Khách hàng" :
+						"Không xác định"
+					} - {auth?.user?.name || "Người dùng"}
+				</span>
+				<Button onClick={(e) => setAnchorElUser(e.currentTarget)}>
+					<Avatar
+						alt={auth?.user?.name || 'Người dùng'}
+						src={auth?.user?.avatar ? `http://localhost:8080/images/uploads/${auth.user.avatar}` : '/default-avatar.jpg'}
+						sx={{ width: 40, height: 40 }}
+					/>
+				</Button>
+			</div>
 
 			<Menu
 				anchorEl={anchorElUser}
@@ -96,9 +109,6 @@ const Header = () => {
 					dense: true,
 				}}
 			>
-				<MenuItem disabled> {auth?.user?.name} </MenuItem>
-				{/* Nhóm: Tài khoản */}
-				<Divider />
 				<Typography variant="caption" className="px-3 text-muted">Tài khoản</Typography>
 				<MenuItem onClick={() => handleNavigate(`/profile/${auth.user.email}`)}>
 					<AccountCircleOutlined fontSize="small" sx={{ mr: 1 }} /> Thông tin cá nhân
@@ -109,6 +119,25 @@ const Header = () => {
 				<MenuItem onClick={() => handleNavigate('/support')}>
 					<HelpOutlineOutlined fontSize="small" sx={{ mr: 1 }} /> Hỗ trợ
 				</MenuItem>
+
+				{/* Menu cho role */}
+				{auth.user.role === "technician" && (
+					<>
+						<Divider />
+						<MenuItem onClick={() => handleNavigate("/ky-thuat-vien/dashboard")}>
+							<DashboardOutlined fontSize="small" sx={{ mr: 1 }} /> Trang kỹ thuật viên
+						</MenuItem>
+					</>
+				)}
+
+				{auth.user.role === "store_manager" && (
+					<>
+						<Divider />
+						<MenuItem onClick={() => handleNavigate("/cua-hang-truong/ky-thuat-vien/danh-sach")}>
+							<StorefrontOutlined fontSize="small" sx={{ mr: 1 }} /> Trang quản lý cửa hàng
+						</MenuItem>
+					</>
+				)}
 
 				{/* Nhóm: Lịch hẹn */}
 				<Divider />
@@ -122,6 +151,8 @@ const Header = () => {
 				<MenuItem onClick={() => handleNavigate(`/dat-lich/khach-hang/${auth.user.user_id}/danh-sach?status=pending`)}>
 					<HistoryOutlined fontSize="small" sx={{ mr: 1 }} /> Chờ duyệt
 				</MenuItem>
+
+				
 					
 				{/* Logout */}
 				<Divider />

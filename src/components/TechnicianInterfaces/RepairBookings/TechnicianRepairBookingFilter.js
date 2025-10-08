@@ -13,37 +13,39 @@ const TechnicianRepairBookingFilter = ({ filter, onFilter }) => {
 	const handleChange = (newFilter) => onFilter(newFilter);
 
 	return (
-		<div className="card p-3 shadow-sm">
-			<div className="row g-2">
-				<div className="col">
-					<TextField
-						type="date"
-						label="Từ ngày"
-						fullWidth
-						size="large"
-						value={startDate}
-						onChange={e => {
-							const val = e.target.value;
-							setStartDate(val);
-							handleChange({ startDate: val, endDate });
-						}}
-						InputLabelProps={{ shrink: true }}
-					/>
-				</div>
-				<div className="col">
-					<TextField
-						type="date"
-						label="Đến ngày"
-						fullWidth
-						size="large"
-						value={endDate}
-						onChange={e => {
-							const val = e.target.value;
-							setEndDate(val);
-							handleChange({ startDate, endDate: val });
-						}}
-						InputLabelProps={{ shrink: true }}
-					/>
+		<div className="card shadow-sm">
+			<div className="card-body">
+				<div className="row g-2">
+					<div className="col">
+						<TextField
+							type="date"
+							label="Từ ngày"
+							fullWidth
+							size="large"
+							value={startDate}
+							onChange={e => {
+								const val = e.target.value;
+								setStartDate(val);
+								handleChange({ startDate: val, endDate });
+							}}
+							InputLabelProps={{ shrink: true }}
+						/>
+					</div>
+					<div className="col">
+						<TextField
+							type="date"
+							label="Đến ngày"
+							fullWidth
+							size="large"
+							value={endDate}
+							onChange={e => {
+								const val = e.target.value;
+								setEndDate(val);
+								handleChange({ startDate, endDate: val });
+							}}
+							InputLabelProps={{ shrink: true }}
+						/>
+					</div>
 				</div>
 			</div>
 		</div>

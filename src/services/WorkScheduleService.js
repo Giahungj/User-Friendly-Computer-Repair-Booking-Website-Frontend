@@ -13,6 +13,7 @@ const getWorkScheduleByTechnician = async (technicianId) => {
 const getWorkSchedulesOfTechnician = async (technicianId) => {
     try {
         const response = await axios.get(`/api/lichlamviec/${technicianId}`);
+        console.log(response);
         return response;
     } catch (error) {
         console.error(`Fetch work schedule failed (technician ${technicianId}):`, error.message);
@@ -23,6 +24,8 @@ const getWorkSchedulesOfTechnician = async (technicianId) => {
 const getWorkScheduleDetail = async (scheduleId) => {
     try {
         const response = await axios.get(`/api/chitietlichlamviec/${scheduleId}`);
+        console.log(response);
+
         return response;
     } catch (error) {
         console.error(`Fetch work schedule failed (schedule ${scheduleId}):`, error.message);
