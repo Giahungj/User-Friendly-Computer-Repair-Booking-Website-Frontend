@@ -29,32 +29,33 @@ function TechnicianManagerPage() {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 
-	useEffect(() => {
-		const loadData = async () => {
-			try {
-				const res = await getAllTechniciansByManager(storeManagerId);
-				if (!res.techData || res.techData.EC !== 0) {
-					setError(true);
-					setLoading(false);
-					return;
-				}
-				if (!res.specData || res.specData.EC !== 0) {
-					setError(true);
-					setLoading(false);
-					return;
-				}
-				setTechnicians(res.techData.DT);
-				setFiltered(res.techData.DT);
-				setSpecialties(res.specData.DT);
-				setLoading(false);
-			} catch (error) {
-				console.error("Lỗi khi load dữ liệu:", error);
+	const loadData = async () => {
+		try {
+			const res = await getAllTechniciansByManager(storeManagerId);
+			if (!res.techData || res.techData.EC !== 0) {
 				setError(true);
 				setLoading(false);
+				return;
 			}
-		};
+			if (!res.specData || res.specData.EC !== 0) {
+				setError(true);
+				setLoading(false);
+				return;
+			}
+			setTechnicians(res.techData.DT);
+			setFiltered(res.techData.DT);
+			setSpecialties(res.specData.DT);
+			setLoading(false);
+		} catch (error) {
+			console.error("Lỗi khi load dữ liệu:", error);
+			setError(true);
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
 		loadData();
-	}, [storeManagerId, auth]);
+	}, []);
 
 	const handleSearch = (e) => {
         const s = e.target.value.toLowerCase();
@@ -154,10 +155,7 @@ function TechnicianManagerPage() {
 				toast.success(res.EM);
 
 				// Thêm vào state mà không reload
-				const updatedTechnicians = [...technicians, res.DT];
-				setTechnicians(updatedTechnicians);
-				setFiltered(updatedTechnicians);
-
+				loadData();
 				setNewTech({}); // reset form
 			} else {
 				toast.error(res.EM);
