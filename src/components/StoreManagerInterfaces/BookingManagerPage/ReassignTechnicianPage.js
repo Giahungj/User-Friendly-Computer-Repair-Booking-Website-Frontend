@@ -17,6 +17,7 @@ const ReassignTechnicianPage = () => {
 	const [booking, setBooking] = useState(null);
 	const [technicians, setTechnicians] = useState([]);
 	const [technicianId, setTechnicianId] = useState(null);
+	const [newWorkScheduleId, setNewWorkScheduleId] = useState(null);
 
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -31,8 +32,8 @@ const ReassignTechnicianPage = () => {
 					return;
 				}
 				setBooking(resBooking.DT);
-
 				const resTech = await getAvailableTechniciansByManager(storeManagerId);
+				console.log(resTech)
 				if (!resTech || resTech.EC !== 0) {
 					setError(resTech?.EM || "Không lấy được danh sách kỹ thuật viên");
 					return;
@@ -60,7 +61,8 @@ const ReassignTechnicianPage = () => {
 		try {
 			const res = await reassignTechnician({
 				bookingId: booking.booking_id,
-				workScheduleId: booking.WorkSchedule.work_schedule_id,
+				oldworkScheduleId: booking.WorkSchedule.work_schedule_id,
+				newWorkScheduleId: newWorkScheduleId,
 				technicianId: technicianId
 			});
 
@@ -108,10 +110,19 @@ const ReassignTechnicianPage = () => {
 									/>
 									<button
 										type="button"
-										onClick={() => setTechnicianId(t.technician_id)}
+										onClick={() => {
+											console.log("==============================================================================");
+											console.log("Thông tin booking:", booking);
+											console.log("Lịch cũ:", booking.WorkSchedule.work_schedule_id);
+											console.log("Kỹ thuật viên cũ:", booking.WorkSchedule.Technician.technician_id);
+											console.log("Chọn kỹ thuật viên ID:", t.technician_id,);
+											console.log("Chọn lịch ID:",  t.WorkSchedule.work_schedule_id);
+											setTechnicianId(t.technician_id);
+											setNewWorkScheduleId(t.WorkSchedule.work_schedule_id);
+										}}
 										disabled={t.WorkSchedule?.current_number >= t.WorkSchedule?.max_number}
 										className={`btn flex-grow-1 text-start rounded-3 py-2 px-3 ${
-											technicianId === t.technician_id
+											technicianId === t.technician_id && newWorkScheduleId === t.WorkSchedule.work_schedule_id
 												? "btn-primary text-white shadow"
 												: "btn-outline-secondary"
 										}`}

@@ -228,21 +228,16 @@ const Header = () => {
 			invertedColors
 			sx={{ display: 'flex', alignItems: 'center', py: 0, px: 4, background: '#fff', borderBottom: '1px solid #ccc' }}
 		>
-			<h1 
-				style={{ 
-					color: '#2196f3', 
-					fontWeight: '700', 
-					fontSize: '2rem', 
-					letterSpacing: '1px', 
-				}}
-			>
-				TechFix
-			</h1>
+			<img 
+				src="/images/uploads/logo.jpg" 
+				alt="Trường Thịnh Group" 
+				style={{ width: '180px', height: 'auto' }} 
+			/>
 			<Box sx={{ flexGrow: 1, display: 'flex', gap: 0, px: 2 }}>
 				{[
                     { label: 'Trang chủ', path: '/' },
                     { label: 'Chuyên mục', path: '/chuyen-muc/tat-ca' },
-                    { label: 'Video', path: '/videos' },
+                    // { label: 'Video', path: '/videos' },
                     { label: 'Kỹ thuật viên', path: '/ky-thuat-vien/tat-ca' },
                     { label: 'Cửa hàng', path: '/cua-hang/tat-ca' },
                     { label: 'Giới thiệu', path: '/gioi-thieu/ve-chung-toi' }

@@ -105,12 +105,29 @@ function BookingManagementPage() {
 			</div>
 
 			<HeaderBar
-				onToday={() => handleFilter({ date: "2025-08-20" })}
-				onThisWeek={() => console.log("Filter this week (TODO)")}
+				onToday={() => handleFilter({ date: new Date().toISOString().split("T")[0] })}
+				onThisWeek={() => {
+					const today = new Date();
+					const currentDay = today.getDay() === 0 ? 7 : today.getDay(); // Chủ nhật = 7
+					const monday = new Date(today);
+					monday.setDate(today.getDate() - currentDay + 1);
+					const sunday = new Date(monday);
+					sunday.setDate(monday.getDate() + 6);
+
+					const filtered = originalBookings.filter(b => {
+						const date = new Date(b.booking_date);
+						return date >= monday && date <= sunday;
+					});
+
+					setBookings(filtered);
+					setStatistics(calcStatistics(filtered));
+				}}
 				onAll={() => {
 					setBookings(originalBookings);
 					setStatistics(calcStatistics(originalBookings));
 				}}
+				bookings={bookings}
+				statistics={statistics}
 			/>
 
 			<FilterPanel onFilter={handleFilter} />

@@ -19,11 +19,11 @@ const BookingDetailModal = ({ booking, onClose }) => {
 	console.log(ws)
 
 	const statusMap = {
-		pending: { label: "Đang chờ", className: "bg-warning text-dark" },
-		confirmed: { label: "Đã xác nhận", className: "bg-primary" },
-		completed: { label: "Hoàn thành", className: "bg-success" },
-		cancelled: { label: "Đã hủy", className: "bg-danger" },
-		default: { label: "Không rõ", className: "bg-secondary" },
+		'pending': { label: "Đang chờ", className: "bg-warning text-dark" },
+		'in-progress' : { label: "Đã xác nhận", className: "bg-primary" },
+		'completed': { label: "Hoàn thành", className: "bg-success" },
+		'cancelled': { label: "Đã hủy", className: "bg-danger" },
+		'default': { label: "Không rõ", className: "bg-secondary" },
 	};
 	const { label: statusLabel, className: statusClass } =
 		statusMap[booking.status] || statusMap.default;
@@ -109,7 +109,7 @@ const BookingDetailModal = ({ booking, onClose }) => {
 							<div className="col-md-6">
 								<p>
 									<EventIcon className="me-2 text-muted" />
-									<strong>Ngày:</strong> {formatDate(ws.work_date)}
+									<strong>Lịch làm việc KTV:</strong> {formatDate(ws.work_date)}
 								</p>
 							</div>
 							<div className="col-md-6">

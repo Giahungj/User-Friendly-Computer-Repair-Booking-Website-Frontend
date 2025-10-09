@@ -128,8 +128,9 @@ const rejectRepairBooking = async (repair_booking_id) => {
     }
 };
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-const getData1 = async ({ technicianId, filter }) => {
+const getData1 = async (data) => {
 	try {
+        const { technicianId, filter } = data;
 		const response = await axios.get(`/api/${technicianId}/laydanhsachdondatlich`, {params: filter});
 		return response;
 	} catch (error) {
@@ -148,11 +149,12 @@ const getData2 = async (bookingId) => {
 	}
 };
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-const reassignTechnician = async ({ bookingId, workScheduleId, technicianId }) => {
+const reassignTechnician = async ({ bookingId, oldworkScheduleId, newWorkScheduleId, technicianId}) => {
 	try {
 		const response = await axios.put(`/api/cua-hang-truong/don-dat-lich/doi-nguoi-sua-chua`, {
 			bookingId,
-			workScheduleId,
+            oldworkScheduleId,
+			newWorkScheduleId,
 			technicianId
 		});
 		return response;

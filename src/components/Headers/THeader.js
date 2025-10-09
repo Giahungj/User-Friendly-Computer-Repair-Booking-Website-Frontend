@@ -172,7 +172,7 @@ const Header = () => {
 			invertedColors
 			sx={{ display: 'flex', alignItems: 'center', py: 0, px: 4, background: '#fff', borderBottom: '1px solid #ccc' }}
 		>
-			<h1 className="fw-bold text-primary">TechFix</h1>
+			<h1 className="fw-bold text-primary">Trường Thịnh Group</h1>
 			<Box sx={{ flexGrow: 1, display: 'flex', gap: 0, px: 2 }}>
 				{[
                     { label: 'Trang chủ', path: '/ky-thuat-vien/dashboard' },

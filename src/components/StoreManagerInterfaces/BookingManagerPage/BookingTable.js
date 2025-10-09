@@ -59,16 +59,11 @@ const BookingTable = ({ bookings, onViewDetail }) => {
 									<td className="d-flex align-items-between align-items-center">
 										{b?.WorkSchedule?.Technician?.User?.avatar && (
 											<Avatar className="me-2"
-												src={b.WorkSchedule.Technician.User.avatar}
+												src={`http://localhost:8080/images${b.WorkSchedule.Technician.User.avatar}`}
 												alt={b.WorkSchedule.Technician.User.name}
 											/>
 										)}
 										{b?.WorkSchedule?.Technician?.User?.name || ""}
-										{b?.WorkSchedule && (
-											<span className="badge text-white ms-2" style={{ backgroundColor: "#7986cb" }}>
-												{b.WorkSchedule.current_number}/{b.WorkSchedule.max_number}
-											</span>
-										)}
 									</td>
 									<td>
 										<span className="badge" style={{

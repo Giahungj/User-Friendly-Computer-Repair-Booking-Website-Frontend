@@ -30,6 +30,7 @@ import BookingDetailPage from '../components/CustomerInterfaces/Bookings/Booking
 import TechnicianListPage from '../components/CustomerInterfaces/Technicians/TechnicianListPage.js';
 import TechnicianDetailPage from '../components/CustomerInterfaces/Technicians/TechnicianDetailPage.js';
 import StoreListPage from '../components/CustomerInterfaces/Stores/StoreListPage.js';
+import StoreDetailPage from '../components/CustomerInterfaces/Stores/StoreDetailPage.js';
 import SpecialtyListPage from '../components/CustomerInterfaces/Specialties/SpecialtyListPage';
 
 // Store Manager
@@ -58,12 +59,13 @@ const AppRoutes = () => (
         {/* Customer Layout */}
         <Route path="/" element={<CustomerHome />}>
             <Route index element={<TrangChu />} />
-            <Route path="about" element={<About />} />
+            <Route path="gioi-thieu/ve-chung-toi" element={<About />} />
 
             {/* Customer Browsing */}
             <Route path="ky-thuat-vien/tat-ca" element={<TechnicianListPage />} />
             <Route path="ky-thuat-vien/:id/chi-tiet" element={<TechnicianDetailPage />} />
             <Route path="cua-hang/tat-ca" element={<StoreListPage />} />
+            <Route path="cua-hang/:storeId/chi-tiet" element={<StoreDetailPage />} />
             <Route path="chuyen-muc/tat-ca" element={<SpecialtyListPage />} />
 
             {/* Protected Customer Routes */}

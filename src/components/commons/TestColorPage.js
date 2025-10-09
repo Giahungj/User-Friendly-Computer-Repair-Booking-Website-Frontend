@@ -34,7 +34,7 @@ const TestColorPage = () => {
 	return (
 		<div style={{ background: colors.bg, minHeight: "100vh", padding: "40px" }}>
 			<Typography variant="h4" sx={{ mb: 4, fontWeight: 700, color: colors.dark }}>
-				Bảng màu giao diện TechFix
+				Bảng màu giao diện Trường Thịnh Group
 			</Typography>
 
 			<div className="row g-3">

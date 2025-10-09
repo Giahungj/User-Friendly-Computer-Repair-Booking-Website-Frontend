@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
 			if (!auth.isAuthenticated) return;
 			try {
 				const res = await axios.get(`/api/notifications/${auth.user.user_id}`);
-				setNotifications(res.data); // giả sử API trả về mảng notifications
+				setNotifications(res.data);
 			} catch (err) {
 				console.error("Lỗi fetch notifications:", err);
 			}

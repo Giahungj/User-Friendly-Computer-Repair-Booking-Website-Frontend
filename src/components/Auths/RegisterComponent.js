@@ -223,7 +223,7 @@ function RegisterForm() {
 						marginTop: '10px'
 					}}
 				>
-					Bằng cách đăng ký, tôi xác nhận rằng mình đã đọc, hiểu và đồng ý với <a href='#'>Chính sách bảo mật</a> và <a href='#'>Điều khoản sử dụng</a> của TechFix. Tôi đồng ý để TechFix thu thập, lưu trữ, sử dụng, tiết lộ và xử lý thông tin của tôi theo Chính sách quyền riêng tư của TechFix.
+					Bằng cách đăng ký, tôi xác nhận rằng mình đã đọc, hiểu và đồng ý với <a href='#'>Chính sách bảo mật</a> và <a href='#'>Điều khoản sử dụng</a> của Trường Thịnh Group. Tôi đồng ý để Trường Thịnh Group thu thập, lưu trữ, sử dụng, tiết lộ và xử lý thông tin của tôi theo Chính sách quyền riêng tư của Trường Thịnh Group.
 				</span>
 			</div>
 		</>

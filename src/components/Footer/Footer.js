@@ -9,7 +9,7 @@ const Footer = () => {
 					<div className="col-md-4 mb-4">
 						<h5 className="fw-bold">Về chúng tôi</h5>
 						<p className="text-muted small">
-							<strong>Your Brand</strong> là nền tảng đặt lịch sửa chữa máy tính, laptop nhanh chóng, tiện lợi và chuyên nghiệp.
+							<strong>Trường Thịnh Group</strong> là nền tảng đặt lịch sửa chữa máy tính, laptop nhanh chóng, tiện lợi và chuyên nghiệp.
 						</p>
 					</div>
 
@@ -48,7 +48,7 @@ const Footer = () => {
 				{/* Bản quyền */}
 				<hr />
 				<p className="text-center text-muted small mb-0 pb-3">
-					© {new Date().getFullYear()} <strong>TechFix</strong>. All rights reserved.
+					© {new Date().getFullYear()} <strong>Trường Thịnh Group</strong>. All rights reserved.
 				</p>
 			</div>
 		</footer>

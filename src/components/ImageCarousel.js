@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Box, Button } from '@mui/material';
 
 const images = [
-    { src: 'https://kimmarcom.com/wp-content/uploads/2024/03/samsung-tiger-in-the-city-1692609922.png', title: 'Chào mừng đến với TechFix', desc: 'Chuyên cung cấp dịch vụ sửa chữa laptop nhanh chóng, uy tín, chuyên nghiệp.' },
-    { src: 'https://file.hstatic.net/1000323386/file/-phu-hop-cho-quang-cao-noi-dong-nguoi_1e99a0faca984485b6a53f570f67a805.jpg', title: 'Dịch vụ tận nơi', desc: 'TechFix hỗ trợ sửa chữa tận nhà, tiết kiệm thời gian cho bạn.' },
+    { src: 'https://kimmarcom.com/wp-content/uploads/2024/03/samsung-tiger-in-the-city-1692609922.png', title: 'Chào mừng đến với Trường Thịnh Group', desc: 'Chuyên cung cấp dịch vụ sửa chữa laptop nhanh chóng, uy tín, chuyên nghiệp.' },
+    { src: 'https://file.hstatic.net/1000323386/file/-phu-hop-cho-quang-cao-noi-dong-nguoi_1e99a0faca984485b6a53f570f67a805.jpg', title: 'Dịch vụ tận nơi', desc: 'Trường Thịnh Group hỗ trợ sửa chữa tận nhà, tiết kiệm thời gian cho bạn.' },
     { src: 'https://plus.vtc.edu.vn/wp-content/uploads/2022/12/Blog-3D-Billboard-3-1.jpg', title: 'Kỹ thuật viên chuyên nghiệp', desc: 'Đội ngũ tay nghề cao, cam kết chất lượng phục vụ.' }
 ];
 

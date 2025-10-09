@@ -150,7 +150,7 @@ const StoreManagerHeader = () => {
 				letterSpacing: "1px",
 			}}
 		>
-			TechFix Manager
+			Trường Thịnh Group Manager
 		</h1>
 
 		<Box sx={{ flexGrow: 1, display: "flex", gap: 0, px: 2 }}>
