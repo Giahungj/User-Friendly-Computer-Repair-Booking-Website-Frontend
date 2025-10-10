@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
+import axios from "../setUp/axios";
+
 
 export const AuthContext = createContext(null);
 
@@ -32,7 +33,7 @@ export const AuthProvider = ({ children }) => {
 			if (!auth.isAuthenticated) return;
 			try {
 				const res = await axios.get(`/api/notifications/${auth.user.user_id}`);
-				setNotifications(res.data);
+				setNotifications(res.DT);
 			} catch (err) {
 				console.error("Lỗi fetch notifications:", err);
 			}

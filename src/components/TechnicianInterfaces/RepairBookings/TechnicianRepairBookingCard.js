@@ -8,22 +8,35 @@ const TechnicianRepairBookingCard = ({ booking, onSelect }) => {
 					<span className={`badge ${
 						booking.status === "completed" ? "bg-success" :
 						booking.status === "pending" ? "bg-warning text-dark" :
+						booking.status === "in-progress" ? "bg-secondary" :
 						booking.status === "cancelled" ? "bg-danger" : "bg-secondary"
 					}`}>
 						{booking.status}
 					</span>
 				</div>
+				
+				<div className="row row-cols-2 g-3">
+					<div className="col-3">
+						<div className="text-end fw-bold mb-1">Khách hàng:</div>
+						<div className="text-end fw-bold mb-1">Thiết bị:</div>
+						<div className="text-end fw-bold mb-1">Sự cố:</div>
+						<div className="text-end fw-bold mb-1">Ngày hẹn:</div>
+						<div className="text-end fw-bold mb-1">Buổi:</div>
+						<div className="text-end text-muted mb-1">Tạo lúc:</div>
+					</div>
 
-				<p className="mb-1"><strong>Khách hàng:</strong> {customerName}</p>
-				{booking.device_type && <p className="mb-1"><strong>Thiết bị:</strong> {booking.device_type} ({booking.brand})</p>}
-				<p className="mb-1"><strong>Sự cố:</strong> {booking.issue_description}</p>
-				<p className="mb-1"><strong>Ngày hẹn:</strong> {booking.booking_date} - {booking.booking_time}</p>
-				<p className="mb-1">
-					<strong>Buổi:</strong>{" "}
-					{booking.WorkSchedule?.shift === "1" ? "Sáng" :
-					booking.WorkSchedule?.shift === "2" ? "Chiều" : "Không rõ"}
-				</p>
-				<p className="mb-0 text-muted"><small>Tạo lúc: {new Date(booking.createdAt).toLocaleString()}</small></p>
+					<div className="col">
+						<div className="mb-1">{customerName}</div>
+						<div className="mb-1">{booking.device_type}({booking.brand})</div>
+						<div className="mb-1">{booking.issue_description}</div>
+						<div className="mb-1">{booking.booking_date}</div>
+						<div className="mb-1">
+							{booking.WorkSchedule?.shift === "1" ? "Sáng" :
+							booking.WorkSchedule?.shift === "2" ? "Chiều" : "Không rõ"}
+						</div>
+						<small className="text-muted mb-1">{new Date(booking.createdAt).toLocaleString()}</small>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

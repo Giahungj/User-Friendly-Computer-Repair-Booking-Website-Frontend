@@ -4,6 +4,8 @@ import { AuthContext } from '../../context/AuthContext';
 import TabAuthComponent from '../Auths/TabAuthComponent';
 import { Sheet } from '@mui/joy';
 import { Button, Badge, Menu, MenuItem, Avatar, Box, Divider, Typography } from '@mui/material';
+import notificationService from '../../services/notificationService';
+
 import {
 	AccountCircleOutlined,
 	HistoryOutlined,
@@ -14,23 +16,29 @@ import {
 	Logout
 } from '@mui/icons-material';
 
-const Header = () => {
+const TechnicianHeader = () => {
 	const navigate = useNavigate();
-	const { auth, logoutContext } = useContext(AuthContext);
+	const { auth, logoutContext, notifications, setNotifications } = useContext(AuthContext);
+
 	const [showLogin, setShowLogin] = useState(false);
 	const [anchorElNoti, setAnchorElNoti] = useState(null);
 	const [anchorElUser, setAnchorElUser] = useState(null);
 
-	const notifications = [
-		{ id: 1, message: 'Thiết bị của bạn đã được chẩn đoán xong.', isRead: false, action: '/bookings/history' },
-		{ id: 2, message: 'Lịch hẹn với kỹ thuật viên A đã được xác nhận.', isRead: true, action: '/bookings/upcoming' },
-		{ id: 3, message: 'Bạn có đánh giá chưa hoàn thành.', isRead: false, action: '/ratings/pending' }
-	];
-	const unreadCount = notifications.filter(n => !n.isRead).length;
+	const unreadCount = notifications.filter(n => !n.is_read).length;
 
 	const handleNavigate = (path) => {
 		window.location.href = path;
 		setAnchorElUser(null);
+	};
+
+	// Khi click vào thông báo, có thể mark as read
+	const handleClickNotification = async (noti) => {
+		console.log(noti)
+		setAnchorElNoti(null);
+		// mark notification as read
+		setNotifications(prev => prev.map(n => n.notification_id === noti.notification_id ? { ...n, is_read: true } : n));
+		await notificationService.handlearkAsReadNotifications(noti.notification_id)
+		navigate(noti.action);
 	};
 
 	const renderUserMenu = () => (
@@ -44,11 +52,8 @@ const Header = () => {
 			<Menu anchorEl={anchorElNoti} open={Boolean(anchorElNoti)} onClose={() => setAnchorElNoti(null)}>
                 {notifications.length > 0 ? notifications.map((noti) => (
                     <MenuItem
-                        key={noti.id}
-                        onClick={() => {
-                            setAnchorElNoti(null);
-                            navigate(noti.action);
-                        }}
+                        key={noti.notification_id}
+                        onClick={() => handleClickNotification(noti)}
                         sx={{
                             width: 320,
                             whiteSpace: 'normal',
@@ -56,11 +61,11 @@ const Header = () => {
                             py: 1.5,
                             px: 2,
                             gap: 1,
-                            backgroundColor: noti.isRead ? '#fff' : '#e3f2fd',
-                            borderLeft: noti.isRead ? '4px solid transparent' : '4px solid #2196f3',
+                            backgroundColor: noti.is_read ? '#fff' : '#e3f2fd',
+                            borderLeft: noti.is_read ? '4px solid transparent' : '4px solid #2196f3',
                         }}
                     >
-                        <Box sx={{ fontSize: 14, color: '#333', fontWeight: noti.isRead ? 400 : 600 }}>
+                        <Box sx={{ fontSize: 14, color: '#333', fontWeight: noti.is_read ? 400 : 600 }}>
                             {noti.message}
                         </Box>
                     </MenuItem>
@@ -210,4 +215,4 @@ const Header = () => {
 };
 
 
-export default Header;
+export default TechnicianHeader;

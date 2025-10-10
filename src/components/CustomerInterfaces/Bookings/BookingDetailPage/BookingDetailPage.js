@@ -35,11 +35,9 @@ function BookingDetailPage() {
 				if (res.EC !== 0) {				
 					setError(true);
 				} 
-				setTimeout(() => {
 					setBooking(res.DT);
-					setUpdatedHistories(res.DT.RepairHistories?.filter(h => h.status === 'updated') || []);
+					setUpdatedHistories(res.DT.RepairHistories || []);
 					setLoading(false);
-				}, 1000);
 			} catch (err) {
 				setError(true);
 			}
@@ -166,20 +164,6 @@ function BookingDetailPage() {
 							) : null;
 						})()}
 					</div>
-
-					{booking?.status === "cancelled" && booking?.RepairHistories && (
-						<div className="card-body">
-							<h5 className="text-danger mb-3">Thông tin hủy lịch</h5>
-							<div className="mb-2 ps-3 border-start border-3 border-danger">
-								<p className="mb-1">
-									<strong>Ghi chú:</strong> {booking.RepairHistories.notes || "Không có"}
-								</p>
-								<p className="mb-0 text-muted small">
-									Thời gian: {new Date(booking.RepairHistories.action_date).toLocaleString("vi-VN")}
-								</p>
-							</div>
-						</div>
-					)}
 
 					{updatedHistories.length > 0 && (
 						<div className="card-body">
@@ -343,7 +327,7 @@ function BookingDetailPage() {
 							variant="outlined"
 							sx={{ minWidth: "120px" }}
 							startIcon={<ArrowBackIcon />}
-							onClick={() => navigate(-1)}
+							onClick={() => navigate(`/ky-thuat-vien/tat-ca`)}
 						>
 							Quay lại
 						</Button>

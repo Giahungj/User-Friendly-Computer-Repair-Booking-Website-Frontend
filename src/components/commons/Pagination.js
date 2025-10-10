@@ -3,7 +3,7 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
 const PaginationMui = ({ totalItems, currentPage, onChangePage }) => {
-	const totalPages = Math.ceil(totalItems / 2);
+	const totalPages = Math.ceil(totalItems / 20);
 	if (totalPages <= 1) return null;
 
 	return (

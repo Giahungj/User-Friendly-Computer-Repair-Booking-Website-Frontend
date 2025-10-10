@@ -8,7 +8,7 @@ import TechnicianScheduleCalendar from "./TechnicianScheduleCalendar";
 import PaginationMui from "../../commons/Pagination";
 import { getWorkSchedulesOfTechnician, getWorkScheduleDetail } from "../../../services/WorkScheduleService";
 
-const ITEMS_PER_PAGE = 10; // số lượng hiển thị mỗi trang
+const ITEMS_PER_PAGE = 20; // số lượng hiển thị mỗi trang
 
 const TechnicianSchedulePage = () => {
 	const { auth } = useContext(AuthContext);

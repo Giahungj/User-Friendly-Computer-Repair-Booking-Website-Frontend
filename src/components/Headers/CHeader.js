@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import TabAuthComponent from '../Auths/TabAuthComponent';
 import TabAuthInternal from '../Auths/TabAuthInternal';
+import notificationService from '../../services/notificationService';
 
 import { Sheet } from '@mui/joy';
 import { Button, Badge, Menu, MenuItem, Avatar, Box, Divider, Typography } from '@mui/material';
@@ -25,13 +26,14 @@ const Header = () => {
 	const [anchorElUser, setAnchorElUser] = useState(null);
 
 	// Badge số thông báo chưa đọc
-	const unreadCount = notifications.filter(n => !n.isRead).length;
+	const unreadCount = notifications.filter(n => !n.is_read).length;
 
 	// Khi click vào thông báo, có thể mark as read
-	const handleClickNotification = (noti) => {
+	const handleClickNotification = async (noti) => {
 		setAnchorElNoti(null);
 		// mark notification as read
-		setNotifications(prev => prev.map(n => n.id === noti.id ? { ...n, isRead: true } : n));
+		setNotifications(prev => prev.map(n => n.notification_id === noti.notification_id ? { ...n, is_read: true } : n));
+		await notificationService.handlearkAsReadNotifications(noti.notification_id)
 		navigate(noti.action);
 	};
 
@@ -51,7 +53,7 @@ const Header = () => {
 			<Menu anchorEl={anchorElNoti} open={Boolean(anchorElNoti)} onClose={() => setAnchorElNoti(null)}>
                 {notifications.length > 0 ? notifications.map((noti) => (
                     <MenuItem
-						key={noti.id}
+						key={noti.notification_id}
 						onClick={() => handleClickNotification(noti)}
 						sx={{
 							width: 320,
@@ -60,11 +62,11 @@ const Header = () => {
 							py: 1.5,
 							px: 2,
 							gap: 1,
-							backgroundColor: noti.isRead ? '#fff' : '#e3f2fd',
-							borderLeft: noti.isRead ? '4px solid transparent' : '4px solid #2196f3',
+							backgroundColor: noti.is_read ? '#fff' : '#e3f2fd',
+							borderLeft: noti.is_read ? '4px solid transparent' : '4px solid #2196f3',
 						}}
 					>
-						<Box sx={{ fontSize: 14, color: '#333', fontWeight: noti.isRead ? 400 : 600 }}>
+						<Box sx={{ fontSize: 14, color: '#333', fontWeight: noti.is_read ? 400 : 600 }}>
 							{noti.message}
 						</Box>
 					</MenuItem>

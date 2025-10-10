@@ -23,15 +23,13 @@ function CancelBookingModal({ open, onClose, bookingId }) {
 		setLoading(true);
 		try {
 			const res = await cancelRepairBooking(bookingId, reason);
-			setTimeout(() => {
-				if (res.EC === 0) {
-						toast.success("Hủy lịch hẹn thành công!");
-						window.location.reload();
-				} else {
-						toast.error(res.EM || "Hủy lịch hẹn thất bại.");
-				}
-				setLoading(false);
-			}, 800);
+			if (res.EC === 0) {
+					toast.success("Hủy lịch hẹn thành công!");
+					window.location.reload();
+			} else {
+					toast.error(res.EM || "Hủy lịch hẹn thất bại.");
+			}
+			setLoading(false);
 		} catch (err) {
 			toast.error("Có lỗi xảy ra khi hủy lịch hẹn.");
 			setLoading(false);

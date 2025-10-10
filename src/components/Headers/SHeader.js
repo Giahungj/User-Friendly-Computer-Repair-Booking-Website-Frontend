@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import TabAuthInternal from '../Auths/TabAuthInternal';
+import notificationService from '../../services/notificationService';
 
 import { Sheet } from '@mui/joy';
 import { Button, Badge, Menu, MenuItem, Avatar, Box, Divider, Typography } from '@mui/material';
@@ -17,20 +18,24 @@ import {
 
 const StoreManagerHeader = () => {
 	const navigate = useNavigate();
-	const { auth, logoutContext } = useContext(AuthContext);
+	const { auth, logoutContext, notifications, setNotifications } = useContext(AuthContext);
 	const [anchorElNoti, setAnchorElNoti] = useState(null);
 	const [anchorElUser, setAnchorElUser] = useState(null);
 
-	const notifications = [
-		{ id: 1, message: 'Kỹ thuật viên A vừa hoàn thành đơn hàng.', isRead: false, action: '/store-manager/orders/completed' },
-		{ id: 2, message: 'Kho hàng sắp hết linh kiện B.', isRead: false, action: '/store-manager/inventory' },
-		{ id: 3, message: 'Có báo cáo mới từ hệ thống.', isRead: true, action: '/store-manager/reports' }
-	];
-	const unreadCount = notifications.filter(n => !n.isRead).length;
+	const unreadCount = notifications.filter(n => !n.is_read).length;
 
 	const handleNavigate = (path) => {
 		window.location.href = path;
 		setAnchorElUser(null);
+	};
+
+	// Khi click vào thông báo, có thể mark as read
+	const handleClickNotification = async (noti) => {
+		setAnchorElNoti(null);
+		// mark notification as read
+		setNotifications(prev => prev.map(n => n.notification_id === noti.notification_id ? { ...n, is_read: true } : n));
+		await notificationService.handlearkAsReadNotifications(noti.notification_id)
+		navigate(noti.action);
 	};
 
 	const renderUserMenu = () => (
@@ -45,10 +50,7 @@ const StoreManagerHeader = () => {
 				{notifications.length > 0 ? notifications.map((noti) => (
 					<MenuItem
 						key={noti.id}
-						onClick={() => {
-							setAnchorElNoti(null);
-							navigate(noti.action);
-						}}
+						onClick={() => handleClickNotification(noti)}
 						sx={{
 							width: 320,
 							whiteSpace: 'normal',
@@ -56,11 +58,11 @@ const StoreManagerHeader = () => {
 							py: 1.5,
 							px: 2,
 							gap: 1,
-							backgroundColor: noti.isRead ? '#fff' : '#e8eaf6',
-							borderLeft: noti.isRead ? '4px solid transparent' : '4px solid #3f51b5',
+							backgroundColor: noti.is_read ? '#fff' : '#e8eaf6',
+							borderLeft: noti.is_read ? '4px solid transparent' : '4px solid #3f51b5',
 						}}
 					>
-						<Box sx={{ fontSize: 14, color: '#333', fontWeight: noti.isRead ? 400 : 600 }}>
+						<Box sx={{ fontSize: 14, color: '#333', fontWeight: noti.is_read ? 400 : 600 }}>
 							{noti.message}
 						</Box>
 					</MenuItem>

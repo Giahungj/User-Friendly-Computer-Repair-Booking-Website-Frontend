@@ -110,7 +110,6 @@ const approveRepairBooking = async (repair_booking_id) => {
 const completedRepairBooking = async (technicianId, bookingId) => {
     try {
         const response = await axios.post(`/api/don-dat-lich/xac-nhan-hoan-thanh-don`, { technicianId, bookingId });
-        console.log(response);
         return response;
     } catch (error) {
         console.error(`Duyệt đơn thất bại:`, error.message);
@@ -128,10 +127,9 @@ const rejectRepairBooking = async (repair_booking_id) => {
     }
 };
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-const getData1 = async (data) => {
+const getBookingsTechnicianId = async (technicianId) => {
 	try {
-        const { technicianId, filter } = data;
-		const response = await axios.get(`/api/${technicianId}/laydanhsachdondatlich`, {params: filter});
+		const response = await axios.get(`/api/ky-thuat-vien/${technicianId}/don-dat-lich/danh-sach`);
 		return response;
 	} catch (error) {
 		console.error("laydanhsachdondatlich:", error.message);
@@ -178,7 +176,7 @@ export {
     completedRepairBooking,
     rejectRepairBooking,
 
-    getData1, getData2,
+    getBookingsTechnicianId, getData2,
 
     reassignTechnician
 }

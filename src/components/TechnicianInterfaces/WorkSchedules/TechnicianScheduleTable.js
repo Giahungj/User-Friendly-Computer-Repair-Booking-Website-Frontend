@@ -17,35 +17,38 @@ const TechnicianScheduleTable = ({ schedules }) => {
 					Không có lịch làm việc
 				</Typography>
 			) : (
-				<Table sx={{ minWidth: 650 }} aria-label="technician schedule table">
-					<TableHead>
-						<TableRow sx={{ backgroundColor: '#1e1e1e' }}>
-							<TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Ngày</TableCell>
-							<TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Ca</TableCell>
-							<TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Trạng thái</TableCell>
-							<TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Cửa hàng</TableCell>
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{schedules.map((s, idx) => (
-							<TableRow
-								key={idx}
-								hover
-								sx={{ cursor: 'pointer' }}
-								onClick={() => navigate(`/ky-thuat-vien/lich-lam-viec/${s.work_schedule_id}/chi-tiet`)}
-							>
-								<TableCell>{new Date(s.work_date).toLocaleDateString("vi-VN")}</TableCell>
-								<TableCell sx={shiftStyle(s.shift)}>{formatShift(s.shift)}</TableCell>
-								<TableCell>
-									{s.current_number >= s.max_number
-										? "Đã đầy"
-										: `Còn ${s.current_number}/${s.max_number} slot`}
-								</TableCell>
-								<TableCell>{s.Technician.Store.name}</TableCell>
-							</TableRow>
-						))}
-					</TableBody>
-				</Table>
+				<div className="table-responsive">
+					<table className="table table-hover align-middle text-center">
+						<thead className="table-dark">
+							<tr>
+								<th>Ngày</th>
+								<th>Ca</th>
+								<th>Trạng thái</th>
+								<th>Cửa hàng</th>
+							</tr>
+						</thead>
+						<tbody>
+							{schedules.map((s) => (
+								<tr
+									key={s.work_schedule_id}
+									style={{ cursor: 'pointer' }}
+									onClick={() => navigate(`/ky-thuat-vien/lich-lam-viec/${s.work_schedule_id}/chi-tiet`)}
+								>
+									<td>{new Date(s.work_date).toLocaleDateString("vi-VN")}</td>
+									<td style={shiftStyle(s.shift)}>{formatShift(s.shift)}</td>
+									<td>
+										{s.current_number >= s.max_number ? (
+											<span className="badge bg-danger">Đã đầy</span>
+										) : (
+											<span className="badge bg-success">Còn trống</span>
+										)}
+									</td>
+									<td>{s.Technician?.Store?.name || "Chưa có"}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
 			)}
 		</div>
 	);
