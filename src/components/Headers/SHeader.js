@@ -22,7 +22,9 @@ const StoreManagerHeader = () => {
 	const [anchorElNoti, setAnchorElNoti] = useState(null);
 	const [anchorElUser, setAnchorElUser] = useState(null);
 
-	const unreadCount = notifications.filter(n => !n.is_read).length;
+	const unreadCount = Array.isArray(notifications)
+	? notifications.filter(n => !n.is_read).length
+	: 0;
 
 	const handleNavigate = (path) => {
 		window.location.href = path;

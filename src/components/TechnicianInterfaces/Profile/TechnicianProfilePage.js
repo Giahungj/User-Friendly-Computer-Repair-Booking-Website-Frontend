@@ -33,12 +33,12 @@ const TechnicianProfilePage = () => {
                 <h4 className="">Hồ sơ Kỹ Thuật Viên</h4>
             </div>
             <div className="row g-4">
-                <div className="col-lg-6">
+                <div className="col-12">
                     <TechnicianProfileForm data={technician} />
                 </div>
-                <div className="col-lg-6">
+                {/* <div className="col-lg-6">
                     <TechnicianPasswordChange />
-                </div>
+                </div> */}
             </div>
         </div>
 	);

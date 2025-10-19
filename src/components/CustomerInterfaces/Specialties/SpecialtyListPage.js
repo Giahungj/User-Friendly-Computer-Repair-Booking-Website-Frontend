@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Skeleton, Button  } from '@mui/material';
+import { Button  } from '@mui/material';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import SpecialtyCard from './SpecialtyCard';
 import SearchSpecialties from '../../Search/SearchSpecialties';
+import LoadingAndError from "../../commons/LoadingAndError";
 import { getSpecialties } from '../../../services/specialtySevice';
 
 const SpecialtyListPage = () => {
@@ -11,25 +12,23 @@ const SpecialtyListPage = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const loadSpecialties = async () => {
             try {
                 const res = await getSpecialties();
                 if (!res || res.EC !== 0) {
-                    setError(true);
+                    setError(res.EM);
                     setLoading(false);
                     return;
                 }
-                setTimeout(() => {
-                    setSpecialties(res.DT);
-                    setFilteredData(res.DT);
-                    setLoading(false);
-                }, 1000);
+                setSpecialties(res.DT);
+                setFilteredData(res.DT);
+                setLoading(false);
             } catch (error) {
                 console.error('Lỗi lấy danh sách chuyên môn:', error);
-                setError(true);
+                setError('Lỗi lấy danh sách chuyên môn');
                 setLoading(false);
             }
         };
@@ -48,6 +47,9 @@ const SpecialtyListPage = () => {
             );
         }
     };
+
+    if (loading) return <LoadingAndError.Loading />;
+    if (error) return <LoadingAndError.Error message={error} />;
 
     return (
         <div className="container py-5">
@@ -84,15 +86,6 @@ const SpecialtyListPage = () => {
                         ? Array.from({ length: 8 }).map((_, idx) => (
                             <div key={idx} className="col mb-4">
                                 <div className="card h-100 shadow-sm border-0 rounded">
-                                    <Skeleton variant="rectangular" width="100%" height={150} />
-
-                                    <div className="card-body d-flex flex-column">
-                                        <Skeleton variant="text" width="70%" height={20} className="mb-2" />
-                                        <Skeleton variant="text" width="100%" height={16} />
-                                        <Skeleton variant="text" width="90%" height={16} className="mb-3" />
-                                        <Skeleton variant="text" width="50%" height={16} className="mb-3" />
-                                        <Skeleton variant="rounded" width={80} height={30} />
-                                    </div>
                                 </div>
                             </div>
                         ))

@@ -5,6 +5,7 @@ import { getAllTechniciansByManager, createTechnicianByManager, updateTechnician
 import { AuthContext } from "../../../context/AuthContext";
 import { TextField } from "@mui/material";
 
+import LoadingAndError from "../../commons/LoadingAndError";
 import TechnicianTable from "./TechnicianTable";
 import TechnicianDetail from "./TechnicianDetail";
 import TechnicianEdit from "./TechnicianEdit";
@@ -166,8 +167,8 @@ function TechnicianManagerPage() {
 		}
 	};
 
-	if (loading) return <div className="text-center py-5">Đang tải dữ liệu...</div>;
-	if (error) return <div className="text-center py-5 text-danger">Không thể tải dữ liệu</div>;
+	if (loading) return <LoadingAndError.Loading />;
+	if (error) return <LoadingAndError.Error message={error}  />;
 
 	return (
 		<div className="container py-5">

@@ -7,7 +7,7 @@ import StoreManagerHome from '../components/Homes/SHome.js';
 import TechnicianHome from '../components/Homes/THome.js';
 
 // Pages
-import TrangChu from '../components/About/TrangChu';
+import HomePage from '../components/Homes/HomePage.js';
 import About from '../components/About/About';
 import TestColorPage from '../components/commons/TestColorPage.js';
 import NotFound from '../components/NotFound/NotFound';
@@ -58,7 +58,7 @@ const AppRoutes = () => (
     <Routes>
         {/* Customer Layout */}
         <Route path="/" element={<CustomerHome />}>
-            <Route index element={<TrangChu />} />
+            <Route index element={<HomePage />} />
             <Route path="gioi-thieu/ve-chung-toi" element={<About />} />
 
             {/* Customer Browsing */}

@@ -6,11 +6,9 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import ReplayIcon from '@mui/icons-material/Replay';
 
 import { getRepairBookingDetail } from "../../../../services/RepairBookingService"
-import BookingDetailSkeleton from "./BookingDetailSkeleton";
+import LoadingAndError from "../../../commons/LoadingAndError";
 import CancelBookingModal from "./CancelBookingModal";
 import UpdateBookingModel from "./UpdateBookingModel";
 import "../RepairBookingCard.scss"; 
@@ -26,66 +24,28 @@ function BookingDetailPage() {
 	const displayedHistories = showAllHistories ? updatedHistories : updatedHistories.slice(0, 1);
 
 	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(false);
+	const [error, setError] = useState(null);
 
 	useEffect(() => {
 		const fetchBooking = async () => {
 			try {
 				const res = await getRepairBookingDetail(bookingId);
-				if (res.EC !== 0) {				
-					setError(true);
+				if (!res || res.EC !== 0) {				
+					setError(res.EM);
 				} 
 					setBooking(res.DT);
 					setUpdatedHistories(res.DT.RepairHistories || []);
 					setLoading(false);
 			} catch (err) {
-				setError(true);
+				setError('Không tải được đơn đặt lịch');
 			}
 		};
 		fetchBooking();
 	}, [bookingId]);
 
-	if (loading) return <BookingDetailSkeleton />;
-	if (error) return (
-		<div className="container py-5 fs-7">
-			<div
-				className="card shadow-sm border-0 p-3 mb-4"
-				style={{ maxWidth: "700px", margin: "0 auto" }}
-			>
-				<div
-					className="card-header border-0 rounded text-center"
-					style={{ backgroundColor: "#e3f2fd" }}
-				>
-					<ErrorOutlineIcon sx={{ fontSize: 40, color: "#f44336" }} />
-					<h4 className="lead mt-2 mb-1">Không thể tải thông tin đơn đặt lịch</h4>
-					<p className="text-muted mb-0">Đã xảy ra sự cố khi lấy dữ liệu chi tiết đơn hàng</p>
-				</div>
-				<div className="p-4 text-center">
-					<p className="lead text-muted mb-4">
-						Vui lòng kiểm tra lại kết nối hoặc thử tải lại trang.
-					</p>
-					<div className="d-flex justify-content-center gap-3">
-						<Button
-							variant="outlined"
-							startIcon={<ArrowBackIcon />}
-							sx={{ borderRadius: "5px", minWidth: "120px" }}
-							onClick={() => navigate(-1)}
-						>
-							Quay lại
-						</Button>
-						<Button
-							variant="contained"
-							startIcon={<ReplayIcon />}
-							sx={{ backgroundColor: "#2196f3", borderRadius: "5px", minWidth: "120px" }}
-							onClick={() => window.location.reload()}
-						>
-							Thử lại
-						</Button>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
+	if (loading) return <LoadingAndError.Loading />;
+	if (error) return <LoadingAndError.Error message={error} />;
+
 	const shiftValue = booking?.WorkSchedule?.shift;
 	const shiftLabel = {
 		1: "Ca sáng (7:00 - 11:00)",

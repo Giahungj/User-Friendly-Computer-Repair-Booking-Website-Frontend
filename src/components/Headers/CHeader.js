@@ -26,7 +26,9 @@ const Header = () => {
 	const [anchorElUser, setAnchorElUser] = useState(null);
 
 	// Badge số thông báo chưa đọc
-	const unreadCount = notifications.filter(n => !n.is_read).length;
+	const unreadCount = Array.isArray(notifications)
+	? notifications.filter(n => !n.is_read).length
+	: 0;
 
 	// Khi click vào thông báo, có thể mark as read
 	const handleClickNotification = async (noti) => {
