@@ -128,6 +128,12 @@ body {
             color: $color-value;
         }
     }
+// // ==================================== MÀU CHỮ =======================================================
+    @each $color-name, $color-value in $colors {
+        .border-#{$color-name} {
+            border-color: $color-value;
+        }
+    }
 
 .App .loading-container {
     display: flex;

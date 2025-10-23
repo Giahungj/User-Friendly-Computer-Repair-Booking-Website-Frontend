@@ -10,7 +10,7 @@ const getTechnicians = async () => {
 };
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-const getTechnicianById = async (technicianId, userId) => {
+const getTechnicianById = async (technicianId) => {
     try {
         const response = await axios.get(`api/ky-thuat-vien/${technicianId}/thong-tin/chi-tiet`);
         return response;
@@ -68,9 +68,34 @@ const createTechnicianByManager = async (storeManagerId, payload) => {
 	}
 };
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-const updateTechnicianByManager = async (storeManagerId, technicianId, data) => {
+const updateBasicInfoByManager = async (storeManagerId, technicianId, basicInforUpdate) => {
     try {
-        const response = await axios.put(`api/cua-hang-truong/${storeManagerId}/ky-thuat-vien/${technicianId}/cap-nhat`, data);
+        const response = await axios.put(
+            `api/cua-hang-truong/${storeManagerId}/ky-thuat-vien/${technicianId}/cap-nhat/thong-tin-co-ban`, basicInforUpdate
+        );
+        return response;
+    } catch (error) {
+        return { EC: -1, EM: error.message || "Lỗi không xác định", DT: {} };
+    }
+};
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+const updateSpecialtiesByManager = async (storeManagerId, technicianId, specialtiesUpdate) => {
+    try {
+        const response = await axios.put(
+            `api/cua-hang-truong/${storeManagerId}/ky-thuat-vien/${technicianId}/cap-nhat/thong-tin-chuyen-mon`, specialtiesUpdate
+        );
+        return response;
+    } catch (error) {
+        return { EC: -1, EM: error.message || "Lỗi không xác định", DT: {} };
+    }
+};
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+const createTechnicianTransferRequestByStoreManager = async (storeManagerId, technicianId, data) => {
+    try {
+        const response = await axios.post(
+            `api/cua-hang-truong/${storeManagerId}/ky-thuat-vien/${technicianId}/yeu-cau/doi-cua-hang`,
+            data
+        );
         return response;
     } catch (error) {
         return { EC: -1, EM: error.message || "Lỗi không xác định", DT: {} };
@@ -94,7 +119,9 @@ export {
     getAllTechniciansByManager,
 
     createTechnicianByManager,
-    updateTechnicianByManager,
+    updateBasicInfoByManager,
+    updateSpecialtiesByManager,
+    createTechnicianTransferRequestByStoreManager,
 
     getTechnicianProfile
 };

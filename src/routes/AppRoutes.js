@@ -36,6 +36,7 @@ import SpecialtyListPage from '../components/CustomerInterfaces/Specialties/Spec
 // Store Manager
 import WorkSchedulePage from '../components/StoreManagerInterfaces/WorkScheduleManagerPage/WorkSchedulePage.js';
 import TechnicianManagerPage from '../components/StoreManagerInterfaces/TechnicianManagerPage/TechnicaianManagerPage.js';
+import TechnicianUpdatePage from "../components/StoreManagerInterfaces/TechnicianManagerPage/TechnicianUpdatePage/TechnicianUpdatePage.js";
 import BookingManagerPage from '../components/StoreManagerInterfaces/BookingManagerPage/BookingManagerPage.js';
 import ManagerBookingDetailPage from '../components/StoreManagerInterfaces/BookingManagerPage/BookingDetailPage.js';
 import StatisticsPage from '../components/StoreManagerInterfaces/StatisticPages/StatisticsPage.js';
@@ -89,11 +90,19 @@ const AppRoutes = () => (
         {/* Store Manager Layout */}
         <Route element={<PrivateStoreManagerRoutes />}>
             <Route path="/" element={<StoreManagerHome />}>
+                {/* Technician */}
                 <Route path="cua-hang-truong/ky-thuat-vien/danh-sach" element={<TechnicianManagerPage />} />
+                <Route path="cua-hang-truong/ky-thuat-vien/:technicianId/cap-nhat" element={<TechnicianUpdatePage />} />
+                
+                {/* RepairBooking */}
                 <Route path="cua-hang-truong/don-dat-lich/danh-sach" element={<BookingManagerPage />} />
                 <Route path="cua-hang-truong/don-dat-lich/:repair_booking_id/chi-tiet" element={<ManagerBookingDetailPage />} />
                 <Route path="cua-hang-truong/don-dat-lich/:repair_booking_id/doi-nguoi-sua-chua" element={<ReassignTechnicianPage />} />
+                
+                {/* Schedule */}
                 <Route path="cua-hang-truong/lich-lam-viec/danh-sach" element={<WorkSchedulePage />} />
+                
+                {/* Report */}
                 <Route path="cua-hang-truong/bao-cao" element={<StatisticsPage />} />
             </Route>
         </Route>

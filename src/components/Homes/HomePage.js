@@ -264,7 +264,7 @@ const HomePage = () => {
             <div 
                 className="text-center text-white d-flex flex-column justify-content-center align-items-center"
                 style={{
-                    height: "400px",
+                    height: "100vh",
                     backgroundImage: "url('https://cdn.pixabay.com/photo/2016/11/21/16/27/laptop-1846277_1280.jpg')",
                     backgroundSize: "cover",
                     backgroundPosition: "center",

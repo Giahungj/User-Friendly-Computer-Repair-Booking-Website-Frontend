@@ -1,4 +1,5 @@
 // ActionButtons.js
+import React from "react";
 import { Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
@@ -15,23 +16,23 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 
 const colors = {
-	primary: "#415A77",
-	dark: "#1B263B",
-	lightDark: "#0D1B2A",
-	accent: "#778DA9",
-	bg: "#E0E1DD",
-	danger: "#D9534F",
-	success: "#4CAF50",
-	warning: "#F4B400",
+	primary: "#6366f1",
+	dark: "#1e293b",
+	lightDark: "rgba(24, 39, 56, 1)",
+	accent: "#14b8a6",
+	bg: "#f8fafc",
+	danger: "#be7371ff",
+	success: "#79c6bdff",
+	warning: "#ba9a6dff",
 };
 
 const baseStyle = {
 	textTransform: "none",
-	borderRadius: 2,
+	borderRadius: 6,
 	fontWeight: "bold",
 	display: "flex",
 	alignItems: "center",
-	gap: 1,
+	gap: .1,
 	transition: "all 0.3s ease",
 };
 
@@ -40,7 +41,7 @@ const createButton = (icon, defaultText, bgColor, hoverColor, textColor = colors
 	onClick,
 	disabled = false,
 	type = "button",
-	size = "large",
+	size = "medium",
 	children,
 	sx = {},
 }) => {
@@ -52,16 +53,30 @@ const createButton = (icon, defaultText, bgColor, hoverColor, textColor = colors
 			disabled={disabled}
 			type={type}
 			size={size}
-			startIcon={icon}
+			startIcon={
+				!isSmall &&
+				React.cloneElement(icon, {
+					fontSize: "small",
+				})
+			}
 			sx={{
 				...baseStyle,
 				backgroundColor: bgColor,
 				color: textColor,
+				minWidth: isSmall ? 40 : "auto",
+				width: isSmall ? 40 : "auto",
+				height: isSmall ? 40 : "auto",
+				borderRadius: isSmall ? "50%" : 6,
+				gap: isSmall ? 0 : "0.25rem",
+				padding: isSmall ? 0 : "6px 16px",
+				"& .MuiButton-startIcon": { margin: 0 },
 				"&:hover": { backgroundColor: hoverColor },
 				...sx,
 			}}
 		>
-			{!isSmall && (children || defaultText)}
+			{isSmall
+				? React.cloneElement(icon, { fontSize: "medium" })
+				: children || defaultText}
 		</Button>
 	);
 };
@@ -78,7 +93,7 @@ export const ConfirmButton = createButton(
 	<CheckCircleOutlineIcon fontSize="small" />,
 	"Xác nhận",
 	colors.success,
-	"#388E3C"
+	"rgba(18, 123, 110, 1)"
 );
 
 export const CloseButton = createButton(

@@ -5,13 +5,13 @@ import { getAllTechniciansByManager, createTechnicianByManager, updateTechnician
 import { AuthContext } from "../../../context/AuthContext";
 import { TextField } from "@mui/material";
 
+import { AddButton } from "../../commons/ActionButtons";
 import LoadingAndError from "../../commons/LoadingAndError";
 import TechnicianTable from "./TechnicianTable";
 import TechnicianDetail from "./TechnicianDetail";
-import TechnicianEdit from "./TechnicianEdit";
 import TechnicianAdd from "./TechnicianAdd";
 
-function TechnicianManagerPage() {
+const TechnicianManagerPage = () => {
 	const { auth } = useContext(AuthContext);
 	const storeManagerId = auth.user.storeManagerId;
 	const storeId = auth.user.storeId;
@@ -70,36 +70,6 @@ function TechnicianManagerPage() {
             )
         );
     };
-
-	const openEdit = (tech) => {
-		setEditTech(tech);
-		setActivePanel("edit");
-		setSelectedTech(null);
-	};
-
-	// Cập nhật kỹ thuật viên
-	const handleUpdate = async () => {
-		try {
-			const res = await updateTechnicianByManager(storeManagerId, editTech.technician_id, editTech);
-			if (res.EC === 0) {
-				toast.success(res.EM);
-
-				const updatedTechnicians = technicians.map((t) =>
-					t.technician_id === editTech.technician_id ? { ...t, ...editTech } : t
-				);
-				setTechnicians(updatedTechnicians);
-				setFiltered(updatedTechnicians);
-
-				setActivePanel(null);
-				setEditTech(null);
-			} else {
-				toast.error(res.EM);
-			}
-		} catch (err) {
-			console.error("Lỗi khi cập nhật kỹ thuật viên:", err);
-			toast.error("Cập nhật thất bại");
-		}
-	};
 
 	const validateNewTech = (tech, technicians) => {
 		const newErrors = {};
@@ -172,26 +142,34 @@ function TechnicianManagerPage() {
 
 	return (
 		<div className="container py-5">
-			<div className="d-flex justify-content-between align-items-center mb-3">
-				<h3 className="lead">Quản lý Kỹ thuật viên</h3>
-				<button
-					className="btn rounded-pill border-0 text-white"
-					style={{ backgroundColor: "#3f51b5" }}
-					onClick={() => setActivePanel("add")}
-				>
-					<PersonAddIcon fontSize="small" /> Thêm KTV
-				</button>
+			<div className="card shadow-sm mb-3 border-0" style={{ background: "#6366f1", color: "#f8fafc" }}>
+				<div className="card-body py-3 d-flex justify-content-between align-items-center">
+					<h4 className="mb-0 fw-bold text-uppercase">Quản lý Kỹ thuật viên</h4>
+					<AddButton onClick={() => setActivePanel("add")} />
+				</div>
 			</div>
 
 			<div className="mb-3">
-				<TextField
-                    label="Tìm kiếm tên"
-                    variant="outlined"
-                    size="small"
-                    fullWidth
-                    value={search}
-                    onChange={handleSearch}
-                />
+				<div className="card" style={{ backgroundColor: "#f8fafc" }}>
+					<div className="card-body">
+						Điều hướng
+					</div>
+				</div>
+			</div>
+
+			<div className="mb-3">
+				<div className="card" style={{ backgroundColor: "#f8fafc" }}>
+					<div className="card-body">
+						<TextField
+							label="Tìm kiếm tên"
+							variant="outlined"
+							size="small"
+							fullWidth
+							value={search}
+							onChange={handleSearch}
+						/>
+					</div>
+				</div>
 			</div>
 
 			<div className="row">
@@ -199,13 +177,13 @@ function TechnicianManagerPage() {
 					<TechnicianTable
 						data={filtered}
 						onView={(t) => { setSelectedTech(t); setActivePanel("view"); }}
-						onEdit={openEdit}
+						onEdit={(t) => { setSelectedTech(t); setActivePanel("edit"); }}
                         onDisable={(t) => { setSelectedTech(t); setActivePanel("view"); }}
 					/>
 				</div>
 
 				{activePanel === "view" && selectedTech && (
-					<div className="col-4 border-start ps-3">
+					<div className="col-4">
 						<TechnicianDetail
 							tech={selectedTech}
 							onClose={() => setActivePanel(null)}
@@ -213,20 +191,8 @@ function TechnicianManagerPage() {
 					</div>
 				)}
 
-				{activePanel === "edit" && editTech && (
-					<div className="col-4 border-start ps-3">
-						<TechnicianEdit
-							tech={editTech}
-							onChange={setEditTech}
-							onUpdate={handleUpdate}
-							specialties={specialties}
-							onClose={() => setActivePanel(null)}
-						/>
-					</div>
-				)}
-
 				{activePanel === "add" && (
-					<div className="col-4 border-start ps-3">
+					<div className="col-5">
 						<TechnicianAdd
 							newTech={newTech}
 							onChange={setNewTech}

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
 const TechnicianScheduleTable = ({ schedules }) => {
 	const navigate = useNavigate();

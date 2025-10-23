@@ -21,6 +21,8 @@ const StoreManagerHeader = () => {
 	const { auth, logoutContext, notifications, setNotifications } = useContext(AuthContext);
 	const [anchorElNoti, setAnchorElNoti] = useState(null);
 	const [anchorElUser, setAnchorElUser] = useState(null);
+	const [anchorEl, setAnchorEl] = useState(null);
+	const open = Boolean(anchorEl);
 
 	const unreadCount = Array.isArray(notifications)
 	? notifications.filter(n => !n.is_read).length
@@ -158,38 +160,153 @@ const StoreManagerHeader = () => {
 		</h1>
 
 		<Box sx={{ flexGrow: 1, display: "flex", gap: 0, px: 2 }}>
-			{[
-				{ label: "Trang chủ", path: "/cua-hang-truong", end: true },
-				{ label: "Kỹ thuật viên", path: "/cua-hang-truong/ky-thuat-vien/danh-sach" },
-				{ label: "Đơn hàng", path: "/cua-hang-truong/don-dat-lich/danh-sach" },
-				{ label: "Lịch làm việc", path: "/cua-hang-truong/lich-lam-viec/danh-sach" },
-				{ label: "Báo cáo", path: "/cua-hang-truong/bao-cao" },
-			].map((item, i) => (
-				<NavLink key={i} to={item.path} end={item.end}>
-					{({ isActive }) => (
-						<Button
-							variant="text"
-							size="md"
-							sx={{
-								color: isActive ? "#E0E1DD" : "#778DA9", // active sáng, inactive accent
-								textTransform: "none",
-								borderBottom: isActive
-									? "3px solid #415A77"
-									: "3px solid transparent",
-								borderRadius: 0,
-								fontWeight: isActive ? "bold" : 400,
-								backgroundColor: isActive ? "#0D1B2A" : "transparent",
-								"&:hover": {
-									backgroundColor: "#415A77",
-									color: "#E0E1DD",
-								},
-							}}
-						>
-							{item.label}
-						</Button>
-					)}
-				</NavLink>
-			))}
+			<NavLink to="/cua-hang-truong" end>
+				{({ isActive }) => (
+					<Button
+						variant="text"
+						size="md"
+						sx={{
+							color: isActive ? "#E0E1DD" : "#778DA9",
+							textTransform: "none",
+							borderBottom: isActive ? "3px solid #415A77" : "3px solid transparent",
+							borderRadius: 0,
+							fontWeight: isActive ? "bold" : 400,
+							backgroundColor: isActive ? "#0D1B2A" : "transparent",
+							"&:hover": { backgroundColor: "#415A77", color: "#E0E1DD" },
+						}}
+					>
+						Trang chủ
+					</Button>
+				)}
+			</NavLink>
+
+			<NavLink to="/cua-hang-truong/ky-thuat-vien/danh-sach">
+				{({ isActive }) => (
+					<Button
+						variant="text"
+						size="md"
+						sx={{
+							color: isActive ? "#E0E1DD" : "#778DA9",
+							textTransform: "none",
+							borderBottom: isActive ? "3px solid #415A77" : "3px solid transparent",
+							borderRadius: 0,
+							fontWeight: isActive ? "bold" : 400,
+							backgroundColor: isActive ? "#0D1B2A" : "transparent",
+							"&:hover": { backgroundColor: "#415A77", color: "#E0E1DD" },
+						}}
+					>
+						Kỹ thuật viên
+					</Button>
+				)}
+			</NavLink>
+
+			<NavLink to="/cua-hang-truong/don-dat-lich/danh-sach">
+				{({ isActive }) => (
+					<Button
+						variant="text"
+						size="md"
+						sx={{
+							color: isActive ? "#E0E1DD" : "#778DA9",
+							textTransform: "none",
+							borderBottom: isActive ? "3px solid #415A77" : "3px solid transparent",
+							borderRadius: 0,
+							fontWeight: isActive ? "bold" : 400,
+							backgroundColor: isActive ? "#0D1B2A" : "transparent",
+							"&:hover": { backgroundColor: "#415A77", color: "#E0E1DD" },
+						}}
+					>
+						Đơn hàng
+					</Button>
+				)}
+			</NavLink>
+
+			<NavLink to="/cua-hang-truong/lich-lam-viec/danh-sach">
+				{({ isActive }) => (
+					<Button
+						variant="text"
+						size="md"
+						sx={{
+							color: isActive ? "#E0E1DD" : "#778DA9",
+							textTransform: "none",
+							borderBottom: isActive ? "3px solid #415A77" : "3px solid transparent",
+							borderRadius: 0,
+							fontWeight: isActive ? "bold" : 400,
+							backgroundColor: isActive ? "#0D1B2A" : "transparent",
+							"&:hover": { backgroundColor: "#415A77", color: "#E0E1DD" },
+						}}
+					>
+						Lịch làm việc
+					</Button>
+				)}
+			</NavLink>
+
+			<NavLink to="/cua-hang-truong/don-dat-lich/danh-sach">
+				{({ isActive }) => (
+					<Button
+						variant="text"
+						size="md"
+						sx={{
+							color: isActive ? "#E0E1DD" : "#778DA9",
+							textTransform: "none",
+							borderBottom: isActive ? "3px solid #415A77" : "3px solid transparent",
+							borderRadius: 0,
+							fontWeight: isActive ? "bold" : 400,
+							backgroundColor: isActive ? "#0D1B2A" : "transparent",
+							"&:hover": { backgroundColor: "#415A77", color: "#E0E1DD" },
+						}}
+					>
+						Báo cáo
+					</Button>
+				)}
+			</NavLink>
+
+			<div>
+				<Button
+					variant="text"
+					size="md"
+					onClick={(e) => setAnchorEl(e.currentTarget)}
+					sx={{
+						color: "#778DA9",
+						textTransform: "none",
+						borderRadius: 0,
+						"&:hover": { backgroundColor: "#415A77", color: "#E0E1DD" },
+					}}
+				>
+					Màu
+				</Button>
+				<Menu
+					anchorEl={anchorEl}
+					open={open}
+					onClose={() => setAnchorEl(null)}
+					MenuListProps={{ "aria-labelledby": "basic-button" }}
+				>
+					<MenuItem style={{ backgroundColor: "#40429bff" }} onClick={() => setAnchorEl(null)}>
+						<NavLink to="#" style={{ textDecoration: "none", color: "#f8fafc", backgroundColor: "#6366f1" }}>
+							Màu chính: (nút, link, tiêu đề) nhẹ hơn, bớt chói
+						</NavLink>
+					</MenuItem>
+					<MenuItem style={{ backgroundColor: "#40429bff" }} onClick={() => setAnchorEl(null)}>
+						<NavLink to="#" style={{ textDecoration: "none", color: "#f8fafc", backgroundColor: "#14b8a6" }}>
+							Màu phụ: phần phụ, badge, icon, highlight
+						</NavLink>
+					</MenuItem>
+					<MenuItem style={{ backgroundColor: "#40429bff" }} onClick={() => setAnchorEl(null)}>
+						<NavLink to="#" style={{ textDecoration: "none", color: "#f8fafc", backgroundColor: "#1e293b" }}>
+							Màu đen: chữ chính, viền, header, sidebar
+						</NavLink>
+					</MenuItem>
+					<MenuItem style={{ backgroundColor: "#40429bff" }} onClick={() => setAnchorEl(null)}>
+						<NavLink to="#" style={{ textDecoration: "none", color: "#1e293b", backgroundColor: "#f1f5f9" }}>
+							Màu nền chính: nền trang, card, vùng trống
+						</NavLink>
+					</MenuItem>
+					<MenuItem style={{ backgroundColor: "#40429bff" }} onClick={() => setAnchorEl(null)}>
+						<NavLink to="#" style={{ textDecoration: "none", color: "#1e293b", backgroundColor: "#f8fafc" }}>
+							Màu nền phụ: nền phụ sáng hơn, tạo lớp phân tách nhẹ
+						</NavLink>
+					</MenuItem>
+				</Menu>
+			</div>
 		</Box>
 
 		<Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
